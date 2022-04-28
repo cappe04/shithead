@@ -14,9 +14,6 @@ firebase.initializeApp(firebaseConfig);
 
 const firebase_database = firebase.database()
 
-const auth = firebase.getAuth()
-firebase.signInAnonymously(auth)
-
 const username = prompt("Nickname: ")
 
 document.getElementById("message-form").addEventListener("submit", sendMessage);
