@@ -1,19 +1,21 @@
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyAHOw3VkBKPEJDdMbTD3kaeTXagT9-cLfQ",
-  authDomain: "chat-demo-eb1b8.firebaseapp.com",
-  databaseURL: "https://chat-demo-eb1b8-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "chat-demo-eb1b8",
-  storageBucket: "chat-demo-eb1b8.appspot.com",
-  messagingSenderId: "638159569583",
-  appId: "1:638159569583:web:4655211de47e9047708a5a",
-  measurementId: "G-V1D32D7QV6"
+    apiKey: "AIzaSyCeIhmX88wai4cphbcH2_ZTifGV636XkQ0",
+    authDomain: "shithead-fda25.firebaseapp.com",
+    databaseURL: "https://shithead-fda25-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "shithead-fda25",
+    storageBucket: "shithead-fda25.appspot.com",
+    messagingSenderId: "335043860876",
+    appId: "1:335043860876:web:a9e7e4a842ea3bcfb6dea9",
+    measurementId: "G-50K3MBX143"
 };
 
 firebase.initializeApp(firebaseConfig);
 
 const firebase_database = firebase.database()
+
+const auth = firebase.getAuth()
+firebase.signInAnonymously(auth)
 
 const username = prompt("Nickname: ")
 
@@ -35,7 +37,7 @@ function sendMessage(event){
 
 const fetch_chat = firebase_database.ref("messages/")
 
-// child added triggras varje gång firebase_database.ref().set kallas
+// child_added triggras varje gång firebase_database.ref().set kallas
 fetch_chat.on("child_added", function (snapshot) {
     const messages = snapshot.val();
     const message = `<li class=${
