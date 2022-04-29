@@ -1,4 +1,3 @@
-
 const firebaseConfig = {
     apiKey: "AIzaSyCeIhmX88wai4cphbcH2_ZTifGV636XkQ0",
     authDomain: "shithead-fda25.firebaseapp.com",
@@ -12,11 +11,31 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const firebaseDatabase = firebase.database();
+// const auth = firebase.auth();
+
+const database = firebase.database();
 
 document.getElementById("btn-enter-username").addEventListener("click", e => {
     firebase.auth().signInAnonymously();
 });
+
+firebase.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+        firebaseUser.nickname = document.getElementById("entry-nickname").value;
+        document.getElementById("nickname-prompt").classList.add("hide")
+        document.getElementById("room-prompt").classList.remove("hide")
+    }
+    console.log(firebaseUser)
+})
+
+document.getElementById("test-button").addEventListener("click", e => {
+    database.ref("test/" + Date.now()).set({
+        karl: "ok",
+        casper: "good",
+        axel: "bad"
+    })
+    console.log("Sent?")
+})
 
 
 

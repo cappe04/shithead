@@ -83,6 +83,10 @@ div {
     width: 80px;
 }
 
+.hide {
+    display: none;
+}
+
 .plain-button {
     cursor: pointer;
     outline: 0;
