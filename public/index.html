@@ -8,13 +8,23 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <div class=popup>
-        <div>
-            <input type="text">
-            <button>Join room</button>
-            <p>or</p>
-            <button>Create room</button>
+    <div class="popup">
+        <h1 class="white">Shithead</h1>
+        <div id="nickname-prompt">
+            <div class="input">
+                <p class="white">Please enter a nickname</p>
+                <input class="entry big" type="text">
+                <button id="btn-enter-username" class="plain-button">Proceed</button>   
+            </div>
+        </div>
+
+        <div id="room-prompt">
+            <div class="input">
+                <p class="white">Enter room code below to join a already created room or create one yourself.</p>
+                <input class="entry small" type="text">
+                <button class="plain-button">Join room</button>
+            </div>
+            <button class="colored-button">Create room</button>
         </div>
     </div>
 

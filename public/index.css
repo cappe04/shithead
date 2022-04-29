@@ -1,0 +1,133 @@
+:root {
+    --transparent-color: rgba(75, 75, 75, 0.75);
+    font-size: 16pt;
+}
+
+html {
+    background-image: url("../images/index\ background.jpg");
+    background-size: cover;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.static-navbar {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    background-color: white;
+    vertical-align: middle;    
+}
+
+.white {
+    color: white;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    width: 40%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--transparent-color);
+}
+
+#nickname-prompt {
+    flex-direction: column;
+    gap: 30px; 
+}
+
+#room-prompt {
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.input {
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.entry {
+    font-size: 16pt;
+    text-align: center;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.big {
+    width: 300px;
+}
+
+.small {
+    width: 80px;
+}
+
+.plain-button {
+    cursor: pointer;
+    outline: 0;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    background-color: white;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.plain-button:hover {
+    color: #0d6efd;
+    background-color: #dddddd;
+    border-color: #0d6efd;
+}
+
+.colored-button {
+    cursor: pointer;
+    outline: 0;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.colored-button:hover {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+
+

@@ -12,34 +12,41 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const firebase_database = firebase.database()
+const firebaseDatabase = firebase.database();
 
-const username = prompt("Nickname: ")
+document.getElementById("btn-enter-username").addEventListener("click", e => {
+    firebase.auth().signInAnonymously();
+});
 
-document.getElementById("message-form").addEventListener("submit", sendMessage);
 
-function sendMessage(event){
-    const timestamp = Date.now();
-    const messageInput = document.getElementById("message-input");
-    const message = messageInput.value;
 
-    messageInput.value = "";
 
-    // skapar firebase database collection och sickar data
-    firebase_database.ref("messages/" + timestamp).set({
-        username,
-        message
-    })
-}
+// const username = prompt("Nickname: ")
 
-const fetch_chat = firebase_database.ref("messages/")
+// document.getElementById("message-form").addEventListener("submit", sendMessage);
 
-// child_added triggras varje gång firebase_database.ref().set kallas
-fetch_chat.on("child_added", function (snapshot) {
-    const messages = snapshot.val();
-    const message = `<li class=${
-        username === messages.username ? "sent" : "receive"
-    }><span>${messages.username}: </span>${messages.message}</li>`;
+// function sendMessage(event){
+//     const timestamp = Date.now();
+//     const messageInput = document.getElementById("message-input");
+//     const message = messageInput.value;
 
-    document.getElementById("messages").innerHTML += message
-})
+//     messageInput.value = "";
+
+//     // skapar firebase database collection och sickar data
+//     firebase_database.ref("messages/" + timestamp).set({
+//         username,
+//         message
+//     })
+// }
+
+// const fetch_chat = firebase_database.ref("messages/")
+
+// // child_added triggras varje gång firebase_database.ref().set kallas
+// fetch_chat.on("child_added", function (snapshot) {
+//     const messages = snapshot.val();
+//     const message = `<li class=${
+//         username === messages.username ? "sent" : "receive"
+//     }><span>${messages.username}: </span>${messages.message}</li>`;
+
+//     document.getElementById("messages").innerHTML += message
+// })
