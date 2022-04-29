@@ -8,20 +8,42 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <div id="chat">
+    <div class="popup">
+        <h1 class="white">Shithead</h1>
+        <div id="nickname-prompt">
+            <div class="input">
+                <p class="white">Please enter a nickname</p>
+                <input id="entry-nickname" class="entry big" type="text">
+                <button id="btn-enter-username" class="plain-button">Proceed</button>   
+            </div>
+        </div>
+
+        <div id="room-prompt" class="hide">
+            <div class="input">
+                <p class="white">Enter room code below to join a already created room or create one yourself.</p>
+                <input class="entry small" type="text">
+                <button class="plain-button">Join room</button>
+            </div>
+            <button class="colored-button">Create room</button>
+        </div>
+        <button id="test-button">Send to database</button>
+    </div>
+
+
+    <!-- <div id="chat">
         <ul id="messages"></ul>
 
         <form id="message-form">
             <input id="message-input" type="text" />
             <button id="message-btn" type="submit">Send</button>
         </form>
-    </div>
+    </div> -->
 
 
     <!-- scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
