@@ -21,12 +21,12 @@
         <div id="room-prompt" class="hide">
             <div class="input">
                 <p class="white">Enter room code below to join a already created room or create one yourself.</p>
-                <input class="entry small" type="text">
-                <button class="plain-button">Join room</button>
+                <input class="entry small" type="text" id="room-key-entry">
+                <button class="plain-button" id="join-room-button">Join room</button>
             </div>
-            <button class="colored-button">Create room</button>
+            <button class="colored-button" id="create-room-button">Create room</button>
         </div>
-        <button id="test-button">Send to database</button>
+
     </div>
 
 
@@ -45,5 +45,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <script src="index.js"></script>
+    <script src="launch.js"></script>
 </body>
 </html>
