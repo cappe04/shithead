@@ -25,15 +25,13 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
 
 document.getElementById("btn-enter-username").addEventListener("click", e => {
     user.nickname = document.getElementById("entry-nickname").value;
-    document.getElementById("nickname-prompt").classList.add("hide")
-    document.getElementById("room-prompt").classList.remove("hide")
+    toggleElements("nickname-prompt", "room-prompt")
     document.getElementById("name-display").innerHTML = `Your name is now ${user.nickname}, click the button below if you want to change it.`
     console.log(user)
 });
 
 document.getElementById("btn-change-name").addEventListener("click", e => {
-    document.getElementById("nickname-prompt").classList.remove("hide")
-    document.getElementById("room-prompt").classList.add("hide")
+    toggleElements("room-prompt", "nickname-prompt")
 })
 
 let roomExists = async function(key){
@@ -60,14 +58,31 @@ let userInRoom = async function (user, key) {
     let inRoom = false;
     await database.ref("rooms/" + key + "/users").once("value").then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            // console.log(childSnapshot.child("uid").val())
-            // console.log(user.uid)
             if (childSnapshot.child("uid").val() == user.uid) {
                 inRoom = true;
             }
         })
     })
     return inRoom;
+}
+
+let joinRoom = function (key, user) {
+    let branch = database.ref("rooms/" + key);
+    branch.child("users").push(userPackage(user));
+    toggleElements("room-prompt", "room-lobby");
+    console.log("Joined room: " + key)
+}
+
+let getUniqueId = async function (key, user) {
+    await database.ref("rooms/" + key + "/users").once("value").then(function(snapshot) {
+        console.log("1")
+        snapshot.forEach(function(childSnapshot) {
+            console.log("2")
+            if (childSnapshot.child("uid").val() == user.uid) {
+                console.log("3")
+            }
+        })
+    })
 }
 
 document.getElementById("btn-create-room").addEventListener("click", async function() {
@@ -80,8 +95,7 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
         }
     }
     branch.set(package)
-    branch.child("users").push(userPackage(user))
-    console.log("Created room: " + key)
+    joinRoom(key, user)
 })
 
 document.getElementById("btn-join-room").addEventListener("click", async function (){
@@ -89,9 +103,8 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
     await roomExists(key)
     if (await roomExists(key)){
         if (!userInRoom(user, key)) {
-            let room = database.ref("rooms/" + key)
-            room.child("users").push(userPackage(user))
-            console.log("joined room: " + key)
+            joinRoom(key, user)
+            document.getElementById("room-display").innerText = `You are now in room ${key}.`
         } else {
             console.log("User already in room")
         }
@@ -99,3 +112,15 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
         console.log("Room doesn't exist")
     }
 })
+
+document.getElementById("btn-leave-room").addEventListener("click", async function () {
+    let key = document.getElementById("room-display").value;
+    let uniqueId = await getUniqueId(key, user);
+    database.ref("rooms/" + key + "/users").child(uniqueId).remove();
+    toggleElements("room-lobby", "room-prompt");
+})
+
+function toggleElements(hide, show) {
+    document.getElementById(hide).classList.add("hide");
+    document.getElementById(show).classList.remove("hide");
+}
