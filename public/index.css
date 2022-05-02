@@ -1,5 +1,6 @@
 :root {
     --transparent-color: rgba(75, 75, 75, 0.75);
+    --user-crossed: line-through;
     font-size: 16pt;
 }
 
@@ -132,6 +133,61 @@ div {
     background-color: #0b5ed7;
     border-color: #0a58ca;
 }
+
+#room-grid {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-grid;
+    border: 2px solid white;
+    column-gap: 4vh;
+}
+
+#room-display {
+    color: white;
+    font-size: 40pt;
+    margin: 0;
+    grid-column: 3;
+    grid-row: 1;
+    padding-right: 10px;
+}
+
+#btn-leave-room {
+    grid-column: 3;
+    grid-row: 2;
+    padding-right: 10px;
+}
+
+#player-list {
+    color: white;
+    padding: 20px;
+    list-style-type: none;
+    font-size: 25pt;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+#player-list .list-self {
+    color: orange
+}
+
+#player-list .list-user:hover {
+    text-decoration: var(--user-crossed);
+}
+
+#player-list li:hover {
+    /*background-color: rgba(100, 100, 100, 0.5);*/
+    border-radius: 1vh;
+    text-align: center;
+}
+
+#room-chat {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 4;
+    border-top: 3px solid white;
+    overflow: auto;
+}
+
+
 
 
 
