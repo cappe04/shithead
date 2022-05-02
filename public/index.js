@@ -47,7 +47,7 @@ let generateKey = async function (){
     return await roomExists(key) ? generateKey(): key
 }
 
-let userPackage = function(user){
+let userPackage = function(user, owner=false){
     return {
         name: user.nickname,
         uid: user.uid
@@ -66,11 +66,55 @@ let userInRoom = async function (user, key) {
     return inRoom;
 }
 
+async function getSnapshot(path, func){
+    let value;
+    await database.ref(path).once("value").then(function(snapshot) {
+        value = func(snapshot)
+    })
+    return value
+}
+
+let getUsers = async function (key) {
+    let users = []
+    await getSnapshot("rooms/" + key + "/users", (snapshot) => {
+        snapshot.forEach(function(childSnapshot){
+            users.push(childSnapshot.toJSON())
+        })
+    })
+    return users
+}
+
 let joinRoom = function (key, user) {
     let branch = database.ref("rooms/" + key);
     branch.child("users").push(userPackage(user));
-    toggleElements("room-prompt", "room-lobby");
     console.log("Joined room: " + key)
+    enterRoom(key)
+}
+
+let enterRoom = async function(key){
+    toggleElements("room-prompt", "room-lobby");
+
+    document.getElementById("room-display").innerHTML = "room: " + key
+
+    const fetch_users = database.ref("rooms/" + key + "/users")
+    let playerList = document.getElementById("player-list")
+    let roomInfo = getSnapshot("rooms/" + key + "room-info", (snapshot) => {return snapshot.toJSON()})
+    let users = await getUsers(key)
+
+    fetch_users.on("child_added", function(snapshot){
+        let u = snapshot.toJSON()
+        playerList.innerHTML += `<li class=${u.uid == user.uid ? "list-self": "list-user"}>${u.name}</li>`
+    })
+
+    document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
+
+}
+
+let ri = function() {
+    let func = function(snapshot){
+        return snapshot.toJSON()
+    }
+    return getSnapshot("rooms/js9n/room-info", func)
 }
 
 let getUniqueId = async function (key, user) {
@@ -91,7 +135,8 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
     let package = {
         "users": [],
         "room-info": {
-            created: Date.now()
+            created: Date.now(),
+            owner: user.uid
         }
     }
     branch.set(package)
@@ -106,7 +151,7 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
             joinRoom(key, user)
             document.getElementById("room-display").innerText = `You are now in room ${key}.`
         } else {
-            console.log("User already in room")
+            enterRoom(key)
         }
     } else {
         console.log("Room doesn't exist")
