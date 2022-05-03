@@ -73,14 +73,7 @@ async function getSnapshot(path, func){
 }
 
 let getUsers = async function (key) {
-    let users = []
-    await getSnapshot("rooms/" + key + "/users", (snapshot) => {
-        snapshot.forEach(function(childSnapshot){
-            users.push(childSnapshot.toJSON())
-            console.log("user")
-        })
-    })
-    return users
+    return getSnapshot("rooms/" + key + "/users", (snapshot) => Object.values(snapshot.toJSON()))
 }
 
 let joinRoom = function (key, user) {
@@ -107,18 +100,6 @@ let enterRoom = async function(key){
 
     document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
 
-}
-
-let getUniqueId = async function (key, user) {
-    await database.ref("rooms/" + key + "/users").once("value").then(function(snapshot) {
-        console.log("1")
-        snapshot.forEach(function(childSnapshot) {
-            console.log("2")
-            if (childSnapshot.child("uid").val() == user.uid) {
-                console.log("3")
-            }
-        })
-    })
 }
 
 //CREATE ROOM
