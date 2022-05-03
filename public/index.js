@@ -20,14 +20,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         firebase.auth().signInAnonymously();
     }
     user = firebaseUser
-    console.log(user)
 })
 
 document.getElementById("btn-enter-username").addEventListener("click", e => {
     user.nickname = document.getElementById("entry-nickname").value;
     toggleElements("nickname-prompt", "room-prompt")
     document.getElementById("name-display").innerHTML = `Your name is now ${user.nickname}, click the button below if you want to change it.`
-    console.log(user)
 });
 
 document.getElementById("btn-change-name").addEventListener("click", e => {
@@ -99,7 +97,7 @@ let enterRoom = async function(key){
     const fetch_users = database.ref("rooms/" + key + "/users")
     let playerList = document.getElementById("player-list")
     let roomInfo = getSnapshot("rooms/" + key + "room-info", (snapshot) => {return snapshot.toJSON()})
-    let users = await getUsers(key)
+    //let users = await getUsers(key)
 
     fetch_users.on("child_added", function(snapshot){
         let u = snapshot.toJSON()
@@ -108,13 +106,6 @@ let enterRoom = async function(key){
 
     document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
 
-}
-
-let ri = function() {
-    let func = function(snapshot){
-        return snapshot.toJSON()
-    }
-    return getSnapshot("rooms/js9n/room-info", func)
 }
 
 let getUniqueId = async function (key, user) {
@@ -129,6 +120,7 @@ let getUniqueId = async function (key, user) {
     })
 }
 
+//CREATE ROOM
 document.getElementById("btn-create-room").addEventListener("click", async function() {
     let key = await generateKey()
     let branch = database.ref("rooms/" + key)
@@ -143,13 +135,13 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
     joinRoom(key, user)
 })
 
+//JOIN ROOM
 document.getElementById("btn-join-room").addEventListener("click", async function (){
     let key = document.getElementById("room-key-entry").value
     await roomExists(key)
     if (await roomExists(key)){
-        if (!userInRoom(user, key)) {
+        if (! await userInRoom(user, key)) {
             joinRoom(key, user)
-            document.getElementById("room-display").innerText = `You are now in room ${key}.`
         } else {
             enterRoom(key)
         }
@@ -158,6 +150,7 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
     }
 })
 
+//LEAVE ROOM
 document.getElementById("btn-leave-room").addEventListener("click", async function () {
     let key = document.getElementById("room-display").value;
     let uniqueId = await getUniqueId(key, user);

@@ -163,6 +163,7 @@ div {
     font-size: 25pt;
     grid-row-start: 1;
     grid-row-end: 3;
+    text-align: center;
 }
 
 #player-list .list-self {
@@ -174,9 +175,8 @@ div {
 }
 
 #player-list li:hover {
-    /*background-color: rgba(100, 100, 100, 0.5);*/
+    background-color: rgba(100, 100, 100, 0.5);
     border-radius: 1vh;
-    text-align: center;
 }
 
 #room-chat {
@@ -185,6 +185,12 @@ div {
     grid-row: 4;
     border-top: 3px solid white;
     overflow: auto;
+}
+
+#room-chat-entry {
+    color: white;
+    list-style-type: none;
+
 }
 
 
