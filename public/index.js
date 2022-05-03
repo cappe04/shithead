@@ -77,6 +77,7 @@ let getUsers = async function (key) {
     await getSnapshot("rooms/" + key + "/users", (snapshot) => {
         snapshot.forEach(function(childSnapshot){
             users.push(childSnapshot.toJSON())
+            console.log("user")
         })
     })
     return users
@@ -152,9 +153,21 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
 
 //LEAVE ROOM
 document.getElementById("btn-leave-room").addEventListener("click", async function () {
-    let key = document.getElementById("room-display").value;
-    let uniqueId = await getUniqueId(key, user);
-    database.ref("rooms/" + key + "/users").child(uniqueId).remove();
+    let key = document.getElementById("room-display").innerHTML;
+    key = key.slice(key.length - 4, key.length)
+    await getSnapshot("rooms/" + key + "/users", (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            if (childSnapshot.toJSON().uid == user.uid){
+                childSnapshot.ref.remove() //har även en .key atribut
+            }
+        })
+    })
+
+    //fungerar inte men borde fungera, tar bort rummet om det är tomt
+    if (await getUsers(key).length == 0){
+        database.ref("rooms/" + key).remove()
+    }
+    
     toggleElements("room-lobby", "room-prompt");
 })
 
