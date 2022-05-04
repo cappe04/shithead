@@ -84,6 +84,7 @@ let joinRoom = function (key, user) {
 }
 
 let enterRoom = async function(key){
+    console.log("Entered room: " + key)
     toggleElements("room-prompt", "room-lobby");
 
     document.getElementById("room-display").innerHTML = "room: " + key
@@ -95,7 +96,17 @@ let enterRoom = async function(key){
 
     fetch_users.on("child_added", function(snapshot){
         let u = snapshot.toJSON()
+        //console.log("child_added")
         playerList.innerHTML += `<li class=${u.uid == user.uid ? "list-self": "list-user"}>${u.name}</li>`
+        console.log(playerList.innerHTML)
+    })
+
+    fetch_users.on("child_removed", function(snapshot){
+        const usr = snapshot.toJSON()
+        let cls = usr.uid == user.uid ? "list-self" : "list-user"
+        let li = `<li class="${cls}">${usr.name}</li>`
+        playerList.innerHTML = playerList.innerHTML.replace(li, "")
+        fetch_users.off("value") //stäng av event listener
     })
 
     document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
@@ -120,12 +131,16 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
 //JOIN ROOM
 document.getElementById("btn-join-room").addEventListener("click", async function (){
     let key = document.getElementById("room-key-entry").value
-    await roomExists(key)
     if (await roomExists(key)){
-        if (! await userInRoom(user, key)) {
-            joinRoom(key, user)
+        let users = await getUsers(key)
+        if (users.length < 4) {
+            if (! await userInRoom(user, key)) {
+                joinRoom(key, user)
+            } else {
+                enterRoom(key)
+            }
         } else {
-            enterRoom(key)
+            console.log("Rooms is full!")
         }
     } else {
         console.log("Room doesn't exist")
@@ -143,6 +158,7 @@ document.getElementById("btn-leave-room").addEventListener("click", async functi
             }
         })
     })
+    document.getElementById("player-list").innerHTML = "<u>Players:</u>"
 
     //fungerar inte men borde fungera, tar bort rummet om det är tomt
     if (await getUsers(key).length == 0){
