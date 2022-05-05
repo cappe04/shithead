@@ -64,10 +64,10 @@ let userInRoom = async function (user, key) {
     return inRoom;
 }
 
-async function getSnapshot(path, func){
+async function getSnapshot(path, callback){
     let value;
     await database.ref(path).once("value").then(function(snapshot) {
-        value = func(snapshot)
+        value = callback(snapshot)
     })
     return value
 }
@@ -115,6 +115,14 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
     }
     branch.set(package)
     joinRoom(key, user)
+
+    branch.on("child_removed", async function(e) {
+        await getSnapshot("rooms/" + key, function(snapshot) {
+            if (!snapshot.child("users").exists()) {
+                database.ref("rooms/" + key).remove()
+            }
+        })
+    })
 })
 
 //JOIN ROOM
@@ -143,11 +151,6 @@ document.getElementById("btn-leave-room").addEventListener("click", async functi
             }
         })
     })
-
-    //fungerar inte men borde fungera, tar bort rummet om det är tomt
-    if (await getUsers(key).length == 0){
-        database.ref("rooms/" + key).remove()
-    }
     
     toggleElements("room-lobby", "room-prompt");
 })
