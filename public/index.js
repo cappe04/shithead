@@ -119,13 +119,13 @@ let enterRoom = async function(key){
     document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
 }
 
-//måste hitta ett sätt att kalla denna funktion när man klickar på ett namn.
 async function removeUserFromRoom(key, nickname){
     let roomInfo = await getSnapshot("rooms/" + key + "/room-info", (snapshot) => {return snapshot.toJSON()})
     if (roomInfo.owner == user.uid){
         getSnapshot("rooms/" + key + "/users", function(snapshot){
             snapshot.forEach(function(child){
-                if(child.toJSON().name == nickname){
+                let usr = child.toJSON()
+                if(usr.name == nickname && usr.uid != user.uid){
                     child.ref.remove()
                 }
             })
@@ -197,6 +197,12 @@ document.getElementById("btn-leave-room").addEventListener("click", async functi
     
     toggleElements("room-lobby", "room-prompt");
     globalKey = null;
+})
+
+//REMOVE USER
+document.getElementById("player-list").addEventListener("click", (e) => {
+    let nickname = e.target.innerHTML
+    removeUserFromRoom(globalKey, nickname)
 })
 
 function toggleElements(hide, show) {
