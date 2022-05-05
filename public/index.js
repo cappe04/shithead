@@ -14,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 var user;
+var globalKey;
 
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (!firebaseUser) {
@@ -76,21 +77,25 @@ let getUsers = async function (key) {
     return getSnapshot("rooms/" + key + "/users", (snapshot) => Object.values(snapshot.toJSON()))
 }
 
+//BACKEND ROOM
 let joinRoom = function (key, user) {
     let branch = database.ref("rooms/" + key);
     branch.child("users").push(userPackage(user));
     console.log("Joined room: " + key)
+    globalKey = key
     enterRoom(key)
 }
 
+//FRONTEND ROOM
 let enterRoom = async function(key){
+    console.log("Entered room: " + key)
     toggleElements("room-prompt", "room-lobby");
 
     document.getElementById("room-display").innerHTML = "room: " + key
 
     const fetch_users = database.ref("rooms/" + key + "/users")
     let playerList = document.getElementById("player-list")
-    let roomInfo = getSnapshot("rooms/" + key + "room-info", (snapshot) => {return snapshot.toJSON()})
+    let roomInfo = await getSnapshot("rooms/" + key + "/room-info", (snapshot) => {return snapshot.toJSON()})
     //let users = await getUsers(key)
 
     fetch_users.on("child_added", function(snapshot){
@@ -98,8 +103,36 @@ let enterRoom = async function(key){
         playerList.innerHTML += `<li class=${u.uid == user.uid ? "list-self": "list-user"}>${u.name}</li>`
     })
 
-    document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
+    fetch_users.on("child_removed", function(snapshot){
+        const usr = snapshot.toJSON()
+        let cls = usr.uid == user.uid ? "list-self" : "list-user"
+        let li = `<li class="${cls}">${usr.name}</li>`
+        playerList.innerHTML = playerList.innerHTML.replace(li, "")
+        //för att byta skärm om du blir kickad
+        if(usr.uid == user.uid){
+            toggleElements("room-lobby", "room-prompt")
+            globalKey = null;
+        }
+    })
 
+    console.log("room owner: ", roomInfo.owner)
+    document.documentElement.style.setProperty("--user-crossed", roomInfo.owner == user.uid ? "line-through" : "normal")
+}
+
+//måste hitta ett sätt att kalla denna funktion när man klickar på ett namn.
+async function removeUserFromRoom(key, nickname){
+    let roomInfo = await getSnapshot("rooms/" + key + "/room-info", (snapshot) => {return snapshot.toJSON()})
+    if (roomInfo.owner == user.uid){
+        getSnapshot("rooms/" + key + "/users", function(snapshot){
+            snapshot.forEach(function(child){
+                if(child.toJSON().name == nickname){
+                    child.ref.remove()
+                }
+            })
+        })
+    } else {
+        console.log("You don't have premission to do that!")
+    }
 }
 
 //CREATE ROOM
@@ -128,12 +161,19 @@ document.getElementById("btn-create-room").addEventListener("click", async funct
 //JOIN ROOM
 document.getElementById("btn-join-room").addEventListener("click", async function (){
     let key = document.getElementById("room-key-entry").value
-    await roomExists(key)
     if (await roomExists(key)){
-        if (! await userInRoom(user, key)) {
-            joinRoom(key, user)
+        //ger error om det inte finns en users gren. Men det bör vara irelevant eftersom rumment ska försvinna om det är tomt
+        let users = await getUsers(key)
+        if (users.length < 4) {
+            if (! await userInRoom(user, key)) {
+                joinRoom(key, user)
+            } else {
+                //blir endast kallad om man stänger sidan och försöker joina igen.
+                enterRoom(key)
+                globalKey = key
+            }
         } else {
-            enterRoom(key)
+            console.log("Room is full!")
         }
     } else {
         console.log("Room doesn't exist")
@@ -142,17 +182,21 @@ document.getElementById("btn-join-room").addEventListener("click", async functio
 
 //LEAVE ROOM
 document.getElementById("btn-leave-room").addEventListener("click", async function () {
-    let key = document.getElementById("room-display").innerHTML;
-    key = key.slice(key.length - 4, key.length)
-    await getSnapshot("rooms/" + key + "/users", (snapshot) => {
+    let key = globalKey
+    await getSnapshot("rooms/" + globalKey + "/users", (snapshot) => {
         snapshot.forEach((childSnapshot) => {
             if (childSnapshot.toJSON().uid == user.uid){
                 childSnapshot.ref.remove() //har även en .key atribut
             }
         })
     })
+    document.getElementById("player-list").innerHTML = "<u>Players:</u>"
+    //stänger av event listener för child_added. Viktigt för ens namn ska synas flear gånger
+    database.ref("rooms/" + key +"/users").off("child_added")
+    database.ref("rooms/" + key +"/users").off("child_removed") //bara för att.
     
     toggleElements("room-lobby", "room-prompt");
+    globalKey = null;
 })
 
 function toggleElements(hide, show) {
