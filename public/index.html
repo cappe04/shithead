@@ -1,66 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="popup" id="menu">
-        <h1 class="white">Shithead</h1>
-        <div id="nickname-prompt">
-            <div class="input">
-                <p class="white">Please enter a nickname</p>
-                <input id="entry-nickname" class="entry big" type="text">
-                <button id="btn-enter-username" class="plain-button">Proceed</button>   
-            </div>
+      <h1 class="white">Shithead</h1>
+      <div id="nickname-prompt" class="hide">
+        <div class="input">
+          <p class="white"><strong>Please enter a nickname</strong></p>
+          <input
+            id="entry-nickname"
+            class="entry big"
+            type="text"
+            style="width: 10rem; height: 1.5rem"
+          />
+          <button
+            id="btn-enter-username"
+            class="plain-button"
+            style="width: 10rem; height: 2rem; border-width: 0.1rem"
+          >
+            <strong>Proceed</strong>
+          </button>
         </div>
+      </div>
 
-        <div id="room-prompt" class="hide">
-            <div class="input">
-                <p id="name-display" class="white"></p>
-                <button id="btn-change-name" class="colored-button">Change name</button>
-            </div>
-            <div class="input">
-                <p class="white">Enter room code below to join a already created room or create one yourself.</p>
-                <input class="entry small" type="text" id="room-key-entry">
-                <button id="btn-join-room" class="plain-button">Join room</button>
-            </div>
-            <button id="btn-create-room" class="colored-button">Create room</button>
+      <div id="room-prompt" class="hide">
+        <div class="input" id="name-corner">
+          <p id="name-display" class="white"></p>
+          <button
+            id="btn-change-name"
+            class="colored-button"
+            style="font-size: 16px"
+          >
+            Change name
+          </button>
         </div>
-
-
-        <div id="room-lobby" class="hide">
-            <div id="room-grid">
-                <p id="room-display">room: n2ja</p>
-                <ul id="player-list">
-                    <u>Players:</u>
-                </ul>
-
-                <ul id="room-chat">
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li>Casper: bad</li>
-                    <li id="room-chat-entry">
-                        Message: <input clas="entry small" style="width:70%">
-                    </li>
-                </ul>
-                <button id="btn-start-game" class ="colored-button">Start game</button>
-                <button id="btn-leave-room" class="plain-button">Leave room</button>
-            </div>
+        <div style="flex-direction: row; gap: 1rem">
+          <div class="input">
+            <input
+              class="entry"
+              type="text"
+              id="room-key-entry"
+              style="width: 5rem; height: 1.5rem"
+            />
+            <button id="btn-join-room" class="plain-button">Join room</button>
+          </div>
+          <p><strong>OR</strong></p>
+          <button
+            id="btn-create-room"
+            class="colored-button"
+            style="width: 5rem; height: 4rem"
+          >
+            Create room
+          </button>
         </div>
+      </div>
+
+      <div id="room-lobby" class="">
+        <div id="room-grid">
+          <div>
+            <p id="room-display">Room: n2ja</p>
+            <ul id="player-list">
+              <u>Players:</u>
+            </ul>
+            <button id="btn-leave-room" class="plain-button">Leave room</button>
+          </div>
+          <div id="room-chat">
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+            <div>Casper: bad</div>
+          </div>
+          <div
+            id="room-chat-entry"
+            style="flex-direction: row; gap: 1rem; margin: 1rem; color: black"
+          >
+            <strong>Message</strong>
+            <input clas="entry small" style="width: 70%" />
+            <button
+              id="btn-start-game"
+              class="colored-button"
+              style="height: 2rem; width: 6rem; font-size: 20px"
+            >
+              Start game
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="hide" id="game">
-        
-    </div>
+    <div class="hide" id="game"></div>
 
     <!-- scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
@@ -69,5 +113,5 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-functions.js"></script>
     <script src="index.js"></script>
     <script src="launch.js"></script>
-</body>
+  </body>
 </html>
