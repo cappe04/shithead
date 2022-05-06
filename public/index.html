@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="popup">
+    <div class="popup" id="menu">
         <h1 class="white">Shithead</h1>
         <div id="nickname-prompt">
             <div class="input">
@@ -52,11 +52,15 @@
                         Message: <input clas="entry small" style="width:70%">
                     </li>
                 </ul>
+                <button id="btn-start-game" class ="colored-button">Start game</button>
                 <button id="btn-leave-room" class="plain-button">Leave room</button>
             </div>
         </div>
     </div>
 
+    <div class="hide" id="game">
+        
+    </div>
 
     <!-- scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>

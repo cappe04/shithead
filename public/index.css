@@ -153,7 +153,12 @@ div {
 #btn-leave-room {
     grid-column: 3;
     grid-row: 2;
-    padding-right: 10px;
+    margin-right: 10px;
+}
+
+#btn-start-game {
+    grid-column: 2;
+    grid-row: 2;
 }
 
 #player-list {
@@ -191,6 +196,14 @@ div {
     color: white;
     list-style-type: none;
 
+}
+
+
+/* MAIN GAME */
+#game {
+    background-image: url("https://static.turbosquid.com/Preview/2020/03/17__01_27_49/Cam2_R_0000.jpg1BDAA584-A8F2-41BF-B8E1-8BB97A0489D6DefaultHQ.jpg");
+    width: 2000px;
+    height: 1000px
 }
 
 

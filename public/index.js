@@ -199,6 +199,11 @@ document.getElementById("btn-leave-room").addEventListener("click", async functi
     globalKey = null;
 })
 
+//START GAME
+document.getElementById("btn-start-game").addEventListener("click", async function(){
+    toggleElements("menu", "game")
+})
+
 //REMOVE USER
 document.getElementById("player-list").addEventListener("click", (e) => {
     let nickname = e.target.innerHTML
