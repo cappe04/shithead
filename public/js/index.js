@@ -1,8 +1,9 @@
+
+
 function toggleElements(hide, show) {
     document.getElementById(hide).classList.add("hide");
     document.getElementById(show).classList.remove("hide");
 }
-
 
 const database = firebase.database();
 
@@ -77,85 +78,80 @@ async function getSnapshot(path, callback) {
 }
 
 let getUsers = async function (key) {
-  return getSnapshot("rooms/" + key + "/users", (snapshot) =>
-    Object.values(snapshot.toJSON())
-  );
+    return getSnapshot("rooms/" + key + "/users", (snapshot) =>
+        Object.values(snapshot.toJSON())
+    );
 };
 
 //BACKEND ROOM
 let joinRoom = function (key, user) {
-  let branch = database.ref("rooms/" + key);
-  console.log(userPackage(user))
-  branch.child("users").push(userPackage(user));
-  console.log("Joined room: " + key);
-  globalKey = key;
+    let branch = database.ref("rooms/" + key);
+    console.log(userPackage(user))
+    branch.child("users").push(userPackage(user));
+    console.log("Joined room: " + key);
+    globalKey = key;
   enterRoom(key);
 };
 
 //FRONTEND ROOM
 let enterRoom = async function (key) {
-  console.log("Entered room: " + key);
-  toggleElements("room-prompt", "room-lobby");
+    console.log("Entered room: " + key);
+    toggleElements("room-prompt", "room-lobby");
 
-  const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
 
-  document.getElementById("room-display").innerHTML = "room: " + key;
+    document.getElementById("room-display").innerHTML = "room: " + key;
 
-  const fetch_users = database.ref("rooms/" + key + "/users");
-  let playerList = document.getElementById("player-list");
-  let roomInfo = await getSnapshot(
-    "rooms/" + key + "/room-info",
-    (snapshot) => {
-      return snapshot.toJSON();
-    }
-  );
-  //let users = await getUsers(key)
+    const fetch_users = database.ref("rooms/" + key + "/users");
+    let playerList = document.getElementById("player-list");
+    let roomInfo = await getSnapshot(
+        "rooms/" + key + "/room-info", (snapshot) => {return snapshot.toJSON();}
+    );
+    //let users = await getUsers(key)
 
-  fetch_users.on("child_added", function (snapshot) {
+    fetch_users.on("child_added", function (snapshot) {
     let u = snapshot.toJSON();
     playerList.innerHTML += `<li class=${
-      u.uid == user.uid ? "list-self" : "list-user"
+        u.uid == user.uid ? "list-self" : "list-user"
     }>${u.name}</li>`;
-  });
+    });
 
-  fetch_users.on("child_removed", function (snapshot) {
-    const usr = snapshot.toJSON();
-    let cls = usr.uid == user.uid ? "list-self" : "list-user";
-    let li = `<li class="${cls}">${usr.name}</li>`;
-    playerList.innerHTML = playerList.innerHTML.replace(li, "");
-    //för att byta skärm om du blir kickad
-    if (usr.uid == user.uid) {
-      toggleElements("room-lobby", "room-prompt");
-      globalKey = null;
-    }
-  });
+    fetch_users.on("child_removed", function (snapshot) {
+        const usr = snapshot.toJSON();
+        let cls = usr.uid == user.uid ? "list-self" : "list-user";
+        let li = `<li class="${cls}">${usr.name}</li>`;
+        playerList.innerHTML = playerList.innerHTML.replace(li, "");
+        //för att byta skärm om du blir kickad
+        if (usr.uid == user.uid) {
+            toggleElements("room-lobby", "room-prompt");
+            globalKey = null;
+        }});
 
-  console.log("room owner: ", roomInfo.owner);
-  document.documentElement.style.setProperty(
-    "--user-crossed",
-    roomInfo.owner == user.uid ? "line-through" : "normal"
-  );
+    console.log("room owner: ", roomInfo.owner);
+    document.documentElement.style.setProperty("--user-crossed",
+        roomInfo.owner == user.uid ? "line-through" : "normal"
+    );
 };
 
 async function removeUserFromRoom(key, nickname) {
-  let roomInfo = await getSnapshot(
-    "rooms/" + key + "/room-info",
-    (snapshot) => {
-      return snapshot.toJSON();
-    }
-  );
-  if (roomInfo.owner == user.uid) {
-    getSnapshot("rooms/" + key + "/users", function (snapshot) {
-      snapshot.forEach(function (child) {
-        let usr = child.toJSON();
-        if (usr.name == nickname && usr.uid != user.uid) {
-          child.ref.remove();
+    let roomInfo = await getSnapshot(
+        "rooms/" + key + "/room-info",
+        (snapshot) => {
+            return snapshot.toJSON();
         }
-      });
+    );
+    if (roomInfo.owner == user.uid) {
+        getSnapshot("rooms/" + key + "/users", function (snapshot) {
+            snapshot.forEach(function (child) {
+                let usr = child.toJSON();
+                if (usr.name == nickname && usr.uid != user.uid) {
+                    child.ref.remove();
+                }
+            });
     });
-  } else {
-    console.log("You don't have premission to do that!");
-  }
+    } else {
+        console.log("You don't have premission to do that!");
+    }
 }
 
 //CREATE ROOM
