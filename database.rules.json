@@ -1,29 +1,38 @@
 {
     "rules": {
+        ".read": false,
+        ".write": false,
+
         "rooms": {
-            ".read": "auth != null",
             ".write": "!data.exists()",
-            ".indexOn": ["room-info", "users"],
+            ".read": true,
 
-            "$room_key": {
+            "$key": {
+                ".write": "!data.exists()",
                 "room-info": {
-                    ".write": false,
-                    
-                    "playing": {
-                        ".write": "root.child('rooms').child($room_key).child('owner').val() == auth.uid"
-                    }
+                    ".read": true,
+                    ".write": "(data.exists() && newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid",
+                    ".validate": "newData.hasChildren(['created', 'owner', 'playing'])"
                 },
-
                 "users": {
-                    ".write": "!data.exists() || root.child('rooms').child($room_key).child('owner').val() == auth.uid",
-                    ".indexOn": ["name", "uid"],
-                    
-                    "name": {
-                        ".validate": "newData.length < 16 && newData.length > 0 && newData.val() != ''"
+                    ".read": true,
+                    ".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
+
+                    "$uid": {
+                        ".validate": "newData.hasChildren(['name', 'hand'])",
+                        
+                        "hand": {
+                            ".read": "$uid === auth.uid",
+                            ".write": "$uid === auth.uid" 
+                        }
                     }
                 }
-            } 
+            }
         }
+
     }
 }
+
+
+
 

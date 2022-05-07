@@ -14,21 +14,22 @@ joinRoomForm.addEventListener("submit", async event => {
     const key = joinRoomForm.key.value;
 
     let users = await getUsers(key);
-        if (users.length < 4) {
-            if (!(await userInRoom(user, key))) {
-                joinRoom(key, user);
-            } else {
-                //blir endast kallad om man stänger sidan och försöker joina igen.
-                enterRoom(key);
-                roomKey = key
-            }
+
+    if (Object.keys(users).length < 4) {
+        if (!(await userInRoom(user, key))) {
+            joinRoom(key, user);
         } else {
-            console.log("Room is full!");
+            //blir endast kallad om man stänger sidan och försöker joina igen.
+            enterRoom(key);
+            roomKey = key
         }
+    } else {
+        console.log("Room is full!");
+    }
 
 })
 
-// Create a room
+//CREATE ROOM
 createRoom.addEventListener("click", async event => {
     const key = await generateKey();
     const branch = database.ref("rooms/" + key);
@@ -82,3 +83,60 @@ playerList.addEventListener("click", event => {
     let playerName = event.target.innerHTML;
     removeUserFromRoom(roomKey, playerName);
 })
+
+
+// ---------------- BACK END FUNCTIONS ----------------
+
+
+async function getSnapshot(path, callback) {
+    let value;
+    await database.ref(path).once("value").then(function (snapshot) {
+        value = callback(snapshot);
+    });
+    return value;
+};
+
+async function getUsers(key) {
+    return getSnapshot("rooms/" + key + "/users", (snapshot) =>
+        snapshot.toJSON()
+    );
+};
+
+let userInRoom = async function (user, key) {
+    let users = await getUsers(key);
+    return Object.keys(users).includes(user)
+};
+
+let joinRoom = function (key, user) {
+    let branch = database.ref("rooms/" + key + "/users/" + user.uid);
+    console.log(userPackage(user))
+    
+    branch.set(userPackage(user))
+    
+    console.log("Joined room: " + key);
+    roomKey = key
+    enterRoom(key);
+};
+
+let userPackage = function (user) {
+    return {
+        name: user.displayName,
+        hand: {},
+    };
+};
+
+let generateKey = async function () {
+    let key = Math.random().toString(36).slice(2, 6);
+    return (await roomExists(key)) ? generateKey() : key;
+};
+
+let roomExists = async function (key) {
+    let exists;
+    await database.ref("rooms/" + key).once("value").then(function (snapshot) {
+        exists = snapshot.exists();
+    });
+    return exists;
+};
+
+
+

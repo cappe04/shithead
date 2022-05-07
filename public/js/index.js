@@ -5,7 +5,7 @@ function toggleElements(hide, show) {
     document.getElementById(show).classList.remove("hide");
 }
 
-const database = firebase.database();
+//const database = firebase.database();
 
 var globalKey;
 
@@ -28,61 +28,57 @@ var globalKey;
 //   toggleElements("room-prompt", "nickname-prompt");
 // });
 
-let roomExists = async function (key) {
-    let exists;
-    await database.ref("rooms/" + key).once("value").then(function (snapshot) {
-        exists = snapshot.exists();
-    });
-    return exists;
-};
+// let roomExists = async function (key) {
+//     let exists;
+//     await database.ref("rooms/" + key).once("value").then(function (snapshot) {
+//         exists = snapshot.exists();
+//     });
+//     return exists;
+// };
 
-let generateKey = async function () {
-    let key = Math.random().toString(36).slice(2, 6);
-    return (await roomExists(key)) ? generateKey() : key;
-};
 
-let userPackage = function (user) {
-    return {
-        name: user.displayName,
-        uid: user.uid,
-    };
-};
+// let userPackage = function (user) {
+//     return {
+//         name: user.displayName,
+//         uid: user.uid,
+//     };
+// };
 
-let userInRoom = async function (user, key) {
-    let inRoom = false;
-    await database.ref("rooms/" + key + "/users").once("value").then(function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-            if (childSnapshot.child("uid").val() == user.uid) {
-                inRoom = true;
-            }
-        });
-    });
-    return inRoom;
-};
+// let userInRoom = async function (user, key) {
+//     let inRoom = false;
+//     await database.ref("rooms/" + key + "/users").once("value").then(function (snapshot) {
+//         snapshot.forEach(function (childSnapshot) {
+//             if (childSnapshot.child("uid").val() == user.uid) {
+//                 inRoom = true;
+//             }
+//         });
+//     });
+//     return inRoom;
+// };
 
-async function getSnapshot(path, callback) {
-    let value;
-    await database.ref(path).once("value").then(function (snapshot) {
-        value = callback(snapshot);
-    });
-    return value;
-}
+// async function getSnapshot(path, callback) {
+//     let value;
+//     await database.ref(path).once("value").then(function (snapshot) {
+//         value = callback(snapshot);
+//     });
+//     return value;
+// }
 
-let getUsers = async function (key) {
-    return getSnapshot("rooms/" + key + "/users", (snapshot) =>
-        Object.values(snapshot.toJSON())
-    );
-};
+// let getUsers = async function (key) {
+//     return getSnapshot("rooms/" + key + "/users", (snapshot) =>
+//         Object.values(snapshot.toJSON())
+//     );
+// };
 
 //BACKEND ROOM
-let joinRoom = function (key, user) {
-    let branch = database.ref("rooms/" + key);
-    console.log(userPackage(user))
-    branch.child("users").push(userPackage(user));
-    console.log("Joined room: " + key);
-    globalKey = key;
-    enterRoom(key);
-};
+// let joinRoom = function (key, user) {
+//     let branch = database.ref("rooms/" + key);
+//     console.log(userPackage(user))
+//     branch.child("users").push(userPackage(user));
+//     console.log("Joined room: " + key);
+//     globalKey = key;
+//     enterRoom(key);
+// };
 
 //FRONTEND ROOM
 let enterRoom = async function (key) {
