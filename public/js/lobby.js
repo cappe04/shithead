@@ -6,7 +6,7 @@ const playerList = document.querySelector("#player-list");
 
 var roomKey;
 
-// Join a room
+//JOIN ROOM
 joinRoomForm.addEventListener("submit", async event => {
     event.preventDefault();
 
@@ -45,13 +45,13 @@ createRoom.addEventListener("click", async event => {
     branch.set(package);
     joinRoom(key, user);
 
-    branch.on("child_removed", async function (e) {
-        await getSnapshot("rooms/" + key, function (snapshot) {
-            if (!snapshot.child("users").exists()) {
-                database.ref("rooms/" + key).remove();
-            }
-        });
-    });
+    // branch.on("child_removed", async function (e) {
+    //     await getSnapshot("rooms/" + key, function (snapshot) {
+    //         if (!snapshot.child("users").exists()) {
+    //             database.ref("rooms/" + key).remove();
+    //         }
+    //     });
+    // });
 });
 
 // Leave the room
@@ -121,7 +121,7 @@ let joinRoom = function (key, user) {
 let userPackage = function (user) {
     return {
         name: user.displayName,
-        hand: {},
+        hand: false, //kan inte vara {} för childen tas bort. så .validate fungerar inte
     };
 };
 

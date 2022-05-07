@@ -13,20 +13,24 @@
                     ".read": true,
                     ".write": "(data.exists() && newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid",
                     ".validate": "newData.hasChildren(['created', 'owner', 'playing'])"
-                },
-                "users": {
-                    ".read": true,
-                    ".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
 
+                },
+                  
+                "users": {
+                    // "||" delen kanske behöver flyttas till write i $uid
+                  	".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
                     "$uid": {
+                      	".write": "!data.exists()",
                         ".validate": "newData.hasChildren(['name', 'hand'])",
-                        
                         "hand": {
                             ".read": "$uid === auth.uid",
                             ".write": "$uid === auth.uid" 
                         }
-                    }
-                }
+                    },
+                    
+                },
+              
+              	"$other": { ".validate": false }
             }
         }
 

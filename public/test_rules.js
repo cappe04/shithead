@@ -18,7 +18,6 @@ firebase.auth().onAuthStateChanged((firebaseUser) => {
       firebase.auth().signInAnonymously();
     };
     joinRoom("4ysn", firebase.auth().currentUser)
-    console.log("bad")
 });
 
 let generateKey = async function () {
@@ -29,7 +28,7 @@ let generateKey = async function () {
 let userPackage = function (user) {
     return {
         name: user.nameDisplay,
-        hand: {},
+        hand: false,
     };
 };
 
@@ -56,13 +55,10 @@ let create = async function(){
 }
 
 let joinRoom = function (key, user) {
-    let branch = database.ref("rooms/" + key + "/users/");
+    const branch = database.ref("rooms/" + key + "/users/" + user.uid);
     user.nameDisplay = "bad"
-    let package = {}
-    package[user.uid] = userPackage(user)
-    branch.set(package)
-    
-    console.log("Joined room: " + key);
+    console.log(userPackage(user))
+    branch.set(userPackage(user))
 }
 
 
