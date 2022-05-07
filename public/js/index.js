@@ -29,52 +29,43 @@ var globalKey;
 // });
 
 let roomExists = async function (key) {
-  let exists;
-  await database
-    .ref("rooms/" + key)
-    .once("value")
-    .then(function (snapshot) {
-      exists = snapshot.exists();
+    let exists;
+    await database.ref("rooms/" + key).once("value").then(function (snapshot) {
+        exists = snapshot.exists();
     });
-  return exists;
+    return exists;
 };
 
 let generateKey = async function () {
-  let key = Math.random().toString(36).slice(2, 6);
-  return (await roomExists(key)) ? generateKey() : key;
+    let key = Math.random().toString(36).slice(2, 6);
+    return (await roomExists(key)) ? generateKey() : key;
 };
 
-let userPackage = function (user, owner = false) {
-  return {
-    name: user.displayName,
-    uid: user.uid,
-  };
+let userPackage = function (user) {
+    return {
+        name: user.displayName,
+        uid: user.uid,
+    };
 };
 
 let userInRoom = async function (user, key) {
-  let inRoom = false;
-  await database
-    .ref("rooms/" + key + "/users")
-    .once("value")
-    .then(function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
-        if (childSnapshot.child("uid").val() == user.uid) {
-          inRoom = true;
-        }
-      });
+    let inRoom = false;
+    await database.ref("rooms/" + key + "/users").once("value").then(function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            if (childSnapshot.child("uid").val() == user.uid) {
+                inRoom = true;
+            }
+        });
     });
-  return inRoom;
+    return inRoom;
 };
 
 async function getSnapshot(path, callback) {
-  let value;
-  await database
-    .ref(path)
-    .once("value")
-    .then(function (snapshot) {
-      value = callback(snapshot);
+    let value;
+    await database.ref(path).once("value").then(function (snapshot) {
+        value = callback(snapshot);
     });
-  return value;
+    return value;
 }
 
 let getUsers = async function (key) {
@@ -90,7 +81,7 @@ let joinRoom = function (key, user) {
     branch.child("users").push(userPackage(user));
     console.log("Joined room: " + key);
     globalKey = key;
-  enterRoom(key);
+    enterRoom(key);
 };
 
 //FRONTEND ROOM

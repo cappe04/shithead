@@ -1,8 +1,7 @@
 const firebaseConfig = {
     apiKey: "AIzaSyCeIhmX88wai4cphbcH2_ZTifGV636XkQ0",
     authDomain: "shithead-fda25.firebaseapp.com",
-    databaseURL:
-    "https://shithead-fda25-default-rtdb.europe-west1.firebasedatabase.app",
+    databaseURL: "https://shithead-fda25-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "shithead-fda25",
     storageBucket: "shithead-fda25.appspot.com",
     messagingSenderId: "335043860876",
