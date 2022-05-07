@@ -4,30 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/public/css/styles.css" />
     <title>Document</title>
   </head>
   <body>
     <div class="popup" id="menu">
       <h1 class="white">Shithead</h1>
-      <div id="nickname-prompt" class="">
+      <form id="nickname-prompt" class="">
         <div class="input">
           <p class="white"><strong>Please enter a nickname</strong></p>
           <input
-            id="entry-nickname"
             class="entry big"
             type="text"
+            name="nickname"
             style="width: 10rem; height: 1.5rem"
           />
           <button
-            id="btn-enter-username"
             class="plain-button"
             style="width: 10rem; height: 2rem; border-width: 0.1rem"
           >
             <strong>Proceed</strong>
           </button>
         </div>
-      </div>
+      </form>
 
       <div id="room-prompt" class="hide">
         <div class="input" id="name-corner">
@@ -41,15 +40,17 @@
           </button>
         </div>
         <div style="flex-direction: row; gap: 1rem">
-          <div class="input">
-            <input
-              class="entry"
-              type="text"
-              id="room-key-entry"
-              style="width: 5rem; height: 1.5rem"
-            />
-            <button id="btn-join-room" class="plain-button">Join room</button>
-          </div>
+          <form id="join-room-form">
+            <div class="input">
+                <input
+                  class="entry"
+                  type="text"
+                  name="key"
+                  style="width: 5rem; height: 1.5rem"
+                />
+                <button class="plain-button">Join room</button>
+              </div>
+          </form>
           <p><strong>OR</strong></p>
           <button
             id="btn-create-room"
@@ -71,13 +72,6 @@
             <button id="btn-leave-room" class="plain-button">Leave room</button>
           </div>
           <div id="room-chat">
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
             <div>Casper: bad</div>
             <div>Casper: bad</div>
             <div>Casper: bad</div>
@@ -111,7 +105,9 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-functions.js"></script>
-    <script src="index.js"></script>
-    <script src="launch.js"></script>
+    <script src="/public/js/config.js"></script>
+    <script src="/public/js/auth.js"></script>
+    <script src="/public/js/index.js"></script>
+    <script src="/public/js/lobby.js"></script>
   </body>
 </html>
