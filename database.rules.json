@@ -1,0 +1,29 @@
+{
+    "rules": {
+        "rooms": {
+            ".read": "auth != null",
+            ".write": "!data.exists()",
+            ".indexOn": ["room-info", "users"],
+
+            "$room_key": {
+                "room-info": {
+                    ".write": false,
+                    
+                    "playing": {
+                        ".write": "root.child('rooms').child($room_key).child('owner').val() == auth.uid"
+                    }
+                },
+
+                "users": {
+                    ".write": "!data.exists() || root.child('rooms').child($room_key).child('owner').val() == auth.uid",
+                    ".indexOn": ["name", "uid"],
+                    
+                    "name": {
+                        ".validate": "newData.length < 16 && newData.length > 0 && newData.val() != ''"
+                    }
+                }
+            } 
+        }
+    }
+}
+
