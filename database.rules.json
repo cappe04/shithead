@@ -4,11 +4,11 @@
         ".write": false,
 
         "rooms": {
-            ".write": "!data.exists()",
+            ".write": "!data.exists() || !newData.exists()",
             ".read": true,
 
             "$key": {
-                ".write": "!data.exists()",
+                ".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
                 "room-info": {
                     ".read": true,
                     ".write": "(data.exists() && newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid",
@@ -17,7 +17,6 @@
                 },
                   
                 "users": {
-                    // "||" delen kanske behöver flyttas till write i $uid
                   	".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
                     "$uid": {
                       	".write": "!data.exists()",
@@ -26,7 +25,7 @@
                             ".read": "$uid === auth.uid",
                             ".write": "$uid === auth.uid" 
                         }
-                    },
+                    }
                     
                 },
               
