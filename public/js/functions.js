@@ -1,0 +1,84 @@
+function toggleElements(hide, show) {
+    document.getElementById(hide).classList.add("hide");
+    document.getElementById(show).classList.remove("hide");
+}
+
+async function getSnapshot(path, callback) {
+    let value;
+    await database.ref(path).once("value").then(function (snapshot) {
+        value = callback(snapshot);
+    });
+    return value;
+};
+
+async function getUsers(key) {
+    return getSnapshot("rooms/" + key + "/users", (snapshot) =>
+        snapshot.toJSON()
+    );
+};
+
+let userInRoom = async function (user, key) {
+    let users = await getUsers(key);
+    return Object.keys(users).includes(user)
+};
+
+let joinRoom = function (key, user) {
+    let branch = database.ref("rooms/" + key + "/users/" + user.uid);
+    console.log(userPackage(user))
+    
+    branch.set(userPackage(user))
+
+    database.ref("rooms").on("child_removed", (snapshot) => {
+        if(snapshot.key == key){
+            exitRoom()
+        }
+    })
+    
+    console.log("Joined room: " + key);
+    roomKey = key
+    enterRoom(key);
+};
+
+let userPackage = function (user) {
+    return {
+        name: user.displayName,
+        hand: false, //kan inte vara {} för childen tas bort. så .validate fungerar inte
+    };
+};
+
+let generateKey = async function () {
+    let key = Math.random().toString(36).slice(2, 6);
+    return (await roomExists(key)) ? generateKey() : key;
+};
+
+let roomExists = async function (key) {
+    let exists;
+    await database.ref("rooms/" + key).once("value").then(function (snapshot) {
+        exists = snapshot.exists();
+    });
+    return exists;
+};
+
+async function removeUserFromRoom(key, nickname) {
+    let owner = await getSnapshot(
+        "rooms/" + key + "/room-info",
+        (snapshot) => {
+            return snapshot.toJSON().owner;
+        }
+    );
+    const user = firebase.auth().currentUser
+
+    if (owner == user.uid) {
+        getSnapshot("rooms/" + key + "/users", function (snapshot) {
+            snapshot.forEach(function (child) {
+                let usr = child.toJSON();
+                console.log(usr, nickname)
+                if (usr.name == nickname && usr.uid != user.uid) {
+                    child.ref.remove();
+                }
+            });
+        });
+    } else {
+        console.log("You don't have premission to do that!");
+    }
+}
