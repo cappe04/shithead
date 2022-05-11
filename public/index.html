@@ -100,7 +100,34 @@
     </div>
 </div>
 
-<div class="hide" id="game"></div>
+<div class="hide" id="game">
+    <div class="player-container">
+        <div id="top-player">
+            <div class="hand"></div>
+        </div>
+        <div id="left-player">
+            <div class="hand vertical"></div>
+        </div>
+        <div id="right-player">
+            <div class="hand vertical"></div>
+        </div>
+        <div id="bottom-player">
+            <div class="hand"></div>
+        </div>
+
+        <div id="community-area">
+            <div id="draw-stack">
+                <div class="card-stack upside-down"></div>
+            </div>
+            <div id="play-stack">
+                <div class="card-stack rightside-up"></div>
+            </div>
+            <div id="trash-stack">
+                <div class="card-stack jumbled upside-down"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- scripts -->
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
