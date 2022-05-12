@@ -200,6 +200,8 @@ h1 {
   margin-top: 10px;
 }
 
+/* --------- PLAYER LIST --------- */
+
 #player-list {
   color: Black;
   padding-right: 25%;
@@ -223,6 +225,8 @@ h1 {
     border-radius: 1vh;
 }
 
+/* --------- CHAT --------- */
+
 #room-chat {
   font-size: 22px;
   flex-direction: column;
@@ -232,10 +236,19 @@ h1 {
   /* height: 8; */
   width: 100%;
   overflow-y: auto;
+  list-style-type: none;
 }
 
 #room-chat-entry {
     color: rgb(0, 0, 0);
+}
+
+#room-chat .chat-self {
+    background-color: #0b5ed7;
+}
+
+#room-chat .chat-other {
+    background-color: yellowgreen;
 }
 
 /* MAIN GAME */

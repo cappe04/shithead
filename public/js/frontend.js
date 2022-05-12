@@ -9,11 +9,16 @@ let enterRoom = async function (key) {
     document.getElementById("room-display").innerHTML = "room: " + key;
 
     const fetch_users = database.ref("rooms/" + key + "/users");
-        let playerList = document.getElementById("player-list");
-        let roomInfo = await getSnapshot(
+    const fetch_chat = database.ref("rooms/" + key + "/chat");
+
+    const playerList = document.getElementById("player-list");
+    const chat = document.getElementById("room-chat");
+
+    let roomInfo = await getSnapshot(
             "rooms/" + key + "/room-info", (snapshot) => {return snapshot.toJSON();}
     );
 
+    //USER JOINED
     fetch_users.on("child_added", function (snapshot) {
         let uid = snapshot.key;
         playerList.innerHTML += `<li class=${
@@ -21,6 +26,15 @@ let enterRoom = async function (key) {
         }>${snapshot.child("name").val()}</li>`;
     });
 
+    //CHAT
+    fetch_chat.on("child_added", function (snapshot) {
+        let message_data = snapshot.toJSON()
+        chat.innerHTML += `<li class=${
+            message_data.uid == user.uid ? "chat-self" : "chat-other"
+        }>${message_data.name}: ${message_data.message}</li>`
+    })
+
+    //USER LEAVE
     fetch_users.on("child_removed", function (snapshot) {
         const usr = snapshot.toJSON();
         let cls = usr.uid == user.uid ? "list-self" : "list-user";
@@ -38,6 +52,11 @@ let enterRoom = async function (key) {
 
 //FRONTEND LEAVE
 let exitRoom = function(){
+    database.ref("rooms/" + roomKey + "/users").off("child_added");
+    database.ref("rooms/" + roomKey + "/chat").off("child_added");
+
+    database.ref("rooms/" + roomKey + "/users").off("child_removed"); //bara för att.
+
     toggleElements("room-lobby", "room-prompt");
     roomKey = null;
 }

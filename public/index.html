@@ -10,8 +10,8 @@
   <body>
     <div class="popup" id="menu">
       <h1 class="white hide">Shithead</h1>
-      <form id="nickname-prompt" class="">
-        <div class="input hide">
+      <form id="nickname-prompt">
+        <div class="input">
           <p class="white"><strong>Please enter a nickname</strong></p>
           <input
             class="entry big"
@@ -64,45 +64,39 @@
         </div>
       </div>
 
-      <div id="room-lobby" class="">
-          <div class="lobby1">
-            <p id="room-display">Room: n2ja</p>
-          </div>
-          <div class="lobby2">
-            <ul id="player-list">
-              <u>Players:</u>
-            </ul>
-        </div>
-        <div class="lobby3">
-              <button id="btn-leave-room" class="plain-button">
-                Leave room
-              </button>
-              <button
-                id="btn-start-game"
-                class="colored-button"
-              >
-                Start game
-              </button>
-          </div>
-          <div class="lobby4">
-          <div id="room-chat">
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-          </div>
+        <div id="room-lobby" class="hide">
+            <div class="lobby1">
+                <p id="room-display">Room: n2ja</p>
+            </div>
+            <div class="lobby2">
+                <ul id="player-list">
+                    <u>Players:</u>
+                </ul>
+            </div>
+            <div class="lobby3">
+                <button id="btn-leave-room" class="plain-button">
+                    Leave room
+                </button>
+                <button
+                    id="btn-start-game"
+                    class="colored-button"
+                >
+                    Start game
+                </button>
+            </div>
+            <div class="lobby4">
+                <ul id="room-chat">
+                    <li class="chat-other">Casper: test</li>
+                </ul>
         </div>
         <div class="lobby5" style="height:100%;">
-          <div
+          <form
             id="room-chat-entry"
             style="flex-direction: row; gap: 1rem; margin: 1rem; color: black"
           >
             <!-- <strong>Message</strong> -->
-            <input clas="entry small" style="width: 70%" />
-        </div>
+            <input class="entry small" style="width: 70%" name=message />
+        </form>
           </div>
         </div>
 
