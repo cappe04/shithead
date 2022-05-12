@@ -1,235 +1,244 @@
 :root {
-  --transparent-color: rgba(224, 224, 224, 1);
-  --user-crossed: line-through;
-  font-size: 25pt;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  color: rgb(0, 0, 0);
+    --transparent-color: rgba(224, 224, 224, 1);
+    --user-crossed: line-through;
+    font-size: 25pt;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    color: rgb(0, 0, 0);
 }
 
 html {
-  background-image: url("./images/index\ background.jpg");
-  background-size: cover;
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
+    background-image: url("./images/index\ background.jpg");
+    background-size: cover;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
 }
 
 div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .static-navbar {
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  top: 0;
-  width: 100%;
-  height: 5%;
-  background-color: white;
-  vertical-align: middle;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    height: 5%;
+    background-color: white;
+    vertical-align: middle;
 }
 
 .white {
-  color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
 }
 
 .popup {
-  display: flex;
-  flex-direction: column;
-  row-gap: 50px;
-  width: 80%;
-  height: 80%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  background-color: var(--transparent-color);
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--transparent-color);
 }
 
 #name-corner {
-  flex-direction: row;
-  gap: 1rem;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 #nickname-prompt {
-  flex-direction: column;
-  gap: 30px;
+    flex-direction: column;
+    gap: 30px;
 }
 
 #room-prompt {
-  flex-direction: column;
-  row-gap: 30px;
+    flex-direction: column;
+    row-gap: 30px;
 }
 
 .input {
-  flex-direction: column;
-  row-gap: 5px;
+    flex-direction: column;
+    row-gap: 5px;
 }
 
 .entry {
-  font-size: 16pt;
-  text-align: center;
-  border-radius: 5px;
-  border-style: none;
+    font-size: 16pt;
+    text-align: center;
+    border-radius: 5px;
+    border-style: none;
 }
 
 .big {
-  width: 300px;
+    width: 300px;
 }
 
 .small {
-  width: 80px;
+    width: 80px;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
 
 .plain-button {
-  cursor: pointer;
-  outline: 0;
-  display: inline-block;
-  font-weight: 400;
-  line-height: 1.5;
-  text-align: center;
-  background-color: white;
-  border: 1px solid transparent;
-  padding: 6px 12px;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  color: #0d6efd;
-  border-color: #0d6efd;
+    cursor: pointer;
+    outline: 0;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    background-color: white;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #0d6efd;
+    border-color: #0d6efd;
 }
 
 .plain-button:hover {
-  color: #0d6efd;
-  background-color: #dddddd;
-  border-color: #0d6efd;
+    color: #0d6efd;
+    background-color: #dddddd;
+    border-color: #0d6efd;
 }
 
 .colored-button {
-  cursor: pointer;
-  outline: 0;
-  color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
-  display: inline-block;
-  font-weight: 400;
-  line-height: 1.5;
-  text-align: center;
-  border: 1px solid transparent;
-  padding: 6px 12px;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+    outline: 0;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .colored-button:hover {
-  color: #fff;
-  background-color: #0b5ed7;
-  border-color: #0a58ca;
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
 }
 
 #room-grid {
-  flex-direction: column;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  border: 2px solid white;
+    flex-direction: column;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    border: 2px solid white;
 }
 
 #room-display {
-  color: white;
-  font-size: 40pt;
-  margin: 0;
-  grid-column: 3;
-  grid-row: 1;
-  padding-right: 10px;
+    color: white;
+    font-size: 40pt;
+    margin: 0;
+    grid-column: 3;
+    grid-row: 1;
+    padding-right: 10px;
 }
 
 #btn-leave-room {
-  grid-column: 3;
-  grid-row: 2;
-  margin-right: 10px;
+    grid-column: 3;
+    grid-row: 2;
+    margin-right: 10px;
 }
 
 #btn-start-game {
-  grid-column: 2;
-  grid-row: 2;
+    grid-column: 2;
+    grid-row: 2;
 }
 
 #player-list {
-  color: white;
-  padding: 20px;
-  list-style-type: none;
-  font-size: 25pt;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  text-align: center;
+    color: white;
+    padding: 20px;
+    list-style-type: none;
+    font-size: 25pt;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    text-align: center;
 }
 
 #player-list .list-self {
-  color: orange;
+    color: orange;
 }
 
 #player-list .list-user:hover {
-  text-decoration: var(--user-crossed);
+    text-decoration: var(--user-crossed);
 }
 
 #player-list li:hover {
-  background-color: rgba(100, 100, 100, 0.5);
-  border-radius: 1vh;
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 1vh;
 }
 
 #room-chat {
-  font-size: 22px;
-  flex-direction: column;
-  align-items: baseline;
-  justify-content: flex-end;
-  background-color: rgb(197, 197, 197);
-  height: 8rem;
-  width: 100%;
-  overflow-y: auto;
+    font-size: 22px;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: flex-end;
+    background-color: rgb(197, 197, 197);
+    height: 8rem;
+    width: 100%;
+    overflow-y: auto;
 }
 
 #room-chat-entry {
-  color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
 }
 
 /* MAIN GAME */
 #game {
-  background-image: url("https://static.turbosquid.com/Preview/2020/03/17__01_27_49/Cam2_R_0000.jpg1BDAA584-A8F2-41BF-B8E1-8BB97A0489D6DefaultHQ.jpg");
-  width: 2000px;
-  height: 1000px;
+    background-image: url("https://static.turbosquid.com/Preview/2020/03/17__01_27_49/Cam2_R_0000.jpg1BDAA584-A8F2-41BF-B8E1-8BB97A0489D6DefaultHQ.jpg");
+    width: 2000px;
+    height: 1000px;
 }
 
 .player-container {
-  display: grid;
-  grid-template-columns: 25% 50% 25%;
-  grid-template-rows: 25% 50% 25%;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  }
-  
-  #top-player { grid-area: 1 / 2 / 2 / 3; }
-  #left-player { grid-area: 2 / 1 / 3 / 2; }
-  #right-player { grid-area: 2 / 3 / 3 / 4; }
-  #bottom-player { grid-area: 3 / 2 / 4 / 3; }
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: 25% 50% 25%;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
 
-  #community-area { grid-area: 2 / 2 / 3 / 3; }
+#top-player {
+    grid-area: 1 / 2 / 2 / 3;
+}
+#left-player {
+    grid-area: 2 / 1 / 3 / 2;
+}
+#right-player {
+    grid-area: 2 / 3 / 3 / 4;
+}
+#bottom-player {
+    grid-area: 3 / 2 / 4 / 3;
+}
 
+#community-area {
+    grid-area: 2 / 2 / 3 / 3;
+}
