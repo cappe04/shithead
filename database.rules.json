@@ -28,14 +28,22 @@
                     }
                     
                 },
-              
+
+                "chat": {
+                    ".write": "!data.exists() || ((data.exists() && !newData.exists()) && root.child('rooms').child($key).child('room-info').child('owner').val() === auth.uid)",
+                    "$timestamp": {
+                        ".write": "!data.exists()",
+                        ".validate": "newData.hasChildren(['uid', 'name', 'message'])"
+                    }
+                    
+                },
+            
               	"$other": { ".validate": false }
             }
         }
 
     }
 }
-
 
 
 

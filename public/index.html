@@ -1,109 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/css/styles.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="popup" id="menu">
-      <h1 class="white hide">Shithead</h1>
-      <form id="nickname-prompt" class="">
-        <div class="input hide">
-          <p class="white"><strong>Please enter a nickname</strong></p>
-          <input
-            class="entry big"
-            type="text"
-            name="nickname"
-            style="width: 10rem; height: 1.5rem"
-            autocomplete="off"
-          />
-          <button
-            class="plain-button"
-            style="width: 10rem; height: 2rem; border-width: 0.1rem"
-          >
-            <strong>Proceed</strong>
-          </button>
-        </div>
-      </form>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/public/css/styles.css" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="popup" id="menu">
+            
+            <form id="nickname-prompt" class="" style="text-align: center;">
+                <h1 class="white">Shithead</h1>
+                <div class="input">
+                    <p class="white">
+                        <strong>Please enter a nickname</strong>
+                    </p>
+                    <input
+                        class="entry big"
+                        type="text"
+                        name="nickname"
+                        style="width: 10rem; height: 1.5rem"
+                        autocomplete="off"
+                    />
+                    <button
+                        class="plain-button"
+                        style="width: 10rem; height: 2rem; border-width: 0.1rem"
+                    >
+                        <strong>Proceed</strong>
+                    </button>
+                </div>
+            </form>
 
-      <div id="room-prompt" class="hide">
-        <div class="input" id="name-corner">
-          <p id="name-display" class="white"></p>
-          <button
-            id="btn-change-name"
-            class="colored-button"
-            style="font-size: 16px"
-          >
-            Change name
-          </button>
-        </div>
-        <div style="flex-direction: row; gap: 1rem">
-          <form id="join-room-form">
-            <div class="input">
-              <input
-                class="entry"
-                type="text"
-                name="key"
-                style="width: 5rem; height: 1.5rem"
-                autocomplete="off"
-              />
-              <button class="plain-button">Join room</button>
+            <div id="room-prompt" class="hide">
+                <div class="input" id="name-corner">
+                    <p id="name-display" class="white"></p>
+                    <button
+                        id="btn-change-name"
+                        class="colored-button"
+                        style="font-size: 16px"
+                    >
+                        Change name
+                    </button>
+                </div>
+                <div style="flex-direction: row; gap: 1rem">
+                    <form id="join-room-form">
+                        <div class="input">
+                            <input
+                                class="entry"
+                                type="text"
+                                name="key"
+                                style="width: 5rem; height: 1.5rem"
+                                autocomplete="off"
+                            />
+                            <button class="plain-button">Join room</button>
+                        </div>
+                    </form>
+                    <p><strong>OR</strong></p>
+                    <button
+                        id="btn-create-room"
+                        class="colored-button"
+                        style="width: 5rem; height: 4rem"
+                    >
+                        Create room
+                    </button>
+                </div>
             </div>
-          </form>
-          <p><strong>OR</strong></p>
-          <button
-            id="btn-create-room"
-            class="colored-button"
-            style="width: 5rem; height: 4rem"
-          >
-            Create room
-          </button>
-        </div>
-      </div>
 
-      <div id="room-lobby" class="">
-          <div class="lobby1">
-            <p id="room-display">Room: n2ja</p>
-          </div>
-          <div class="lobby2">
-            <ul id="player-list">
-              <u>Players:</u>
-            </ul>
-        </div>
-        <div class="lobby3">
-              <button id="btn-leave-room" class="plain-button">
-                Leave room
-              </button>
-              <button
-                id="btn-start-game"
-                class="colored-button"
-              >
-                Start game
-              </button>
-          </div>
-          <div class="lobby4">
-          <div id="room-chat">
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-            <div>Casper: bad</div>
-          </div>
-        </div>
-        <div class="lobby5" style="height:100%;">
-          <div
-            id="room-chat-entry"
-            style="flex-direction: row; gap: 1rem; margin: 1rem; color: black"
-          >
-            <!-- <strong>Message</strong> -->
-            <input clas="entry small" style="width: 70%" />
-        </div>
-          </div>
+            <div id="room-lobby" class="hide">
+                <div id="room-grid" class="">
+                    <div class="lobby1">
+                        <p id="room-display">Room: n2ja</p>
+                    </div>
+                    <div class="lobby2">
+                        <ul id="player-list">
+                            <u>Players:</u>
+                        </ul>
+                    </div>
+                    <div class="lobby3">
+                        <button id="btn-leave-room" class="plain-button">
+                            Leave room
+                        </button>
+                        <button
+                            id="btn-start-game"
+                            class="colored-button"
+                        >
+                            Start game
+                        </button>
+                    </div>
+                    <div class="lobby4">
+                        <ul id="room-chat">
+                            <li class="chat-other">Casper: test</li>
+                        </ul>
+                    </div>
+                    <div class="lobby5" style="height:100%;">
+                        <form
+                            id="room-chat-entry"
+                            style="flex-direction: row; gap: 1rem; margin: 1rem; color: black"
+                        >
+                            <!-- <strong>Message</strong> -->
+                            <input class="entry small" style="width: 70%" name=message />
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="hide" id="game">
@@ -145,5 +145,5 @@
         <script src="/public/js/auth.js"></script>
         <script src="/public/js/frontend.js"></script>
         <script src="/public/js/lobby.js"></script>
-  </body>
+    </body>
 </html>

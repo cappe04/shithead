@@ -3,6 +3,7 @@ const createRoom = document.querySelector("#btn-create-room");
 const leaveRoom = document.querySelector("#btn-leave-room");
 const startGame = document.querySelector("#btn-start-game");
 const playerList = document.querySelector("#player-list");
+const chatForm = document.getElementById("room-chat")
 
 //JOIN ROOM
 joinRoomForm.addEventListener("submit", async event => {
@@ -60,11 +61,7 @@ leaveRoom.addEventListener("click", async event => {
 
     document.getElementById("player-list").innerHTML = "<u>Players:</u>";
     //stänger av event listener för child_added. Viktigt för ens namn ska synas flear gånger
-    database.ref("rooms/" + roomKey + "/users").off("child_added");
-    database.ref("rooms/" + roomKey + "/users").off("child_removed"); //bara för att.
-
-    toggleElements("room-lobby", "room-prompt");
-    roomKey = null;
+    exitRoom()
 })
 
 // Start the game
@@ -76,6 +73,20 @@ startGame.addEventListener("click", async event => {
 playerList.addEventListener("click", event => {
     let playerName = event.target.innerHTML;
     removeUserFromRoom(roomKey, playerName);
+})
+
+//SEND MESSAGE
+chatForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const user = firebase.auth().currentUser
+    const chat = database.ref("rooms/" + roomKey + "/chat")
+    chat.set({
+        "uid": user.uid,
+        "name": user.displayName,
+        "message": chatForm.message
+    })
+
 })
 
 
