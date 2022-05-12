@@ -49,15 +49,15 @@ h1 {
 }
 
 .popup {
-  display: flex;
-  flex-direction: column;
-  /* row-gap: 50px; */
-  width: 80%;
-  height: 80%;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  background-color: var(--transparent-color);
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 50px; */
+    width: 80%;
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--transparent-color);
 }
 
 #name-corner {
@@ -146,70 +146,71 @@ h1 {
     background-color: #0b5ed7;
     border-color: #0a58ca;
 }
+        
 
-#room-lobby {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template-columns: repeat(2, 0.3fr) 0.4fr;
-  grid-template-rows: 0.25fr 0.5fr 0.25fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 10px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  /* padding: 20px; */
-  /* border: 2px solid black; */
+#room-grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(2, 0.3fr) 0.4fr;
+    grid-template-rows: 0.25fr 0.5fr 0.25fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 10px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    /* padding: 20px; */
+    /* border: 2px solid black; */
 }
 
 .lobby1 {
-  grid-area: 1 / 1 / 2 / 2;
+    grid-area: 1 / 1 / 2 / 2;
 }
 .lobby2 {
-  grid-area: 1 / 2 / 2 / 3;
+    grid-area: 1 / 2 / 2 / 3;
 }
 .lobby3 {
-  grid-area: 1 / 3 / 2 / 4;
+    grid-area: 1 / 3 / 2 / 4;
 }
 .lobby4 {
-  grid-area: 2 / 1 / 3 / 4;
+    grid-area: 2 / 1 / 3 / 4;
 }
 .lobby5 {
-  grid-area: 3 / 1 / 4 / 3;
+    grid-area: 3 / 1 / 4 / 3;
 }
 .lobby6 {
-  grid-area: 3 / 3 / 4 / 4;
+    grid-area: 3 / 3 / 4 / 4;
 }
 
 #room-display {
-  color: rgb(0, 0, 0);
-  /* font-size: 40pt; */
-  margin: 0;
-  grid-column: 3;
-  grid-row: 1;
-  padding-right: 10px;
+    color: rgb(0, 0, 0);
+    /* font-size: 40pt; */
+    margin: 0;
+    grid-column: 3;
+    grid-row: 1;
+    padding-right: 10px;
 }
 
 #btn-leave-room {
-  height: 100%;
-  margin-right: 10px;
-  margin-top: 10px;
+    height: 100%;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 #btn-start-game {
-  height: 100%;
-  margin-right: 10px;
-  margin-top: 10px;
+    height: 100%;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 /* --------- PLAYER LIST --------- */
 
 #player-list {
-  color: Black;
-  padding-right: 25%;
-  list-style-type: none;
-  font-size: 25pt;
-  grid-row-start: 1;
-  grid-row-end: 3;
-  text-align: center;
+    color: Black;
+    padding-right: 25%;
+    list-style-type: none;
+    font-size: 25pt;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    text-align: center;
 }
 
 #player-list .list-self {
