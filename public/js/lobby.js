@@ -4,6 +4,7 @@ const leaveRoom = document.querySelector("#btn-leave-room");
 const startGame = document.querySelector("#btn-start-game");
 const playerList = document.querySelector("#player-list");
 const chatForm = document.getElementById("room-chat-entry")
+const roomChat = document.getElementById("room-chat")
 
 //JOIN ROOM
 joinRoomForm.addEventListener("submit", async event => {
@@ -59,12 +60,13 @@ leaveRoom.addEventListener("click", async event => {
         database.ref("rooms/" + roomKey).remove()
     }
 
-    document.getElementById("player-list").innerHTML = "<u>Players:</u>";
-    //stänger av event listener för child_added. Viktigt för ens namn ska synas flear gånger
+    playerList.innerHTML = "<u>Players:</u>";
+    roomChat.innerHTML = "";
+    
     exitRoom()
 })
 
-// Start the game
+// START GAME
 startGame.addEventListener("click", async event => {
     toggleElements("menu", "game");
 })
@@ -78,17 +80,7 @@ playerList.addEventListener("click", event => {
 //SEND MESSAGE
 chatForm.addEventListener("submit", async event => {
     event.preventDefault();
-
-    const user = firebase.auth().currentUser
-    const chat = database.ref("rooms/" + roomKey + "/chat/" + Date.now())
-    let package = {
-        "uid": user.uid,
-        "name": user.displayName,
-        "message": chatForm.message.value
-    }
-    console.log(package)
-    chat.set(package)
-
+    sendMessage(roomKey, chatForm.message.value)
 })
 
 
