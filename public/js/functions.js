@@ -11,7 +11,7 @@ async function getSnapshot(path, callback) {
     return value;
 };
 
-async function getUsers(key) {
+async function getUsers(key) { // ändra så att {snapshot.key : snapshot.toJSON()} returneras. behöver dock ändras på alla andra ställen i koden
     return getSnapshot("rooms/" + key + "/users", (snapshot) =>
         snapshot.toJSON()
     );
@@ -51,7 +51,7 @@ let generateKey = async function () {
     return (await roomExists(key)) ? generateKey() : key;
 };
 
-let roomExists = async function (key) {
+let roomExists = async function (key) { // skriv om med getSnapshot
     let exists;
     await database.ref("rooms/" + key).once("value").then(function (snapshot) {
         exists = snapshot.exists();
@@ -59,20 +59,27 @@ let roomExists = async function (key) {
     return exists;
 };
 
+function sendMessage(key, message){
+    const user = firebase.auth().currentUser
+    const chat = database.ref("rooms/" + key + "/chat/" + Date.now())
+    let package = {
+        "uid": user.uid,
+        "name": user.displayName,
+        "message": message
+    }
+    chat.set(package)
+}
+
 async function removeUserFromRoom(key, nickname) {
-    let owner = await getSnapshot(
-        "rooms/" + key + "/room-info",
-        (snapshot) => {
-            return snapshot.toJSON().owner;
-        }
-    );
+    let owner = await getSnapshot("rooms/" + key + "/room-info",(snapshot) => {
+        return snapshot.toJSON().owner;
+    });
     const user = firebase.auth().currentUser
 
     if (owner == user.uid) {
         getSnapshot("rooms/" + key + "/users", function (snapshot) {
             snapshot.forEach(function (child) {
                 let usr = child.toJSON();
-                console.log(usr, nickname)
                 if (usr.name == nickname && usr.uid != user.uid) {
                     child.ref.remove();
                 }
