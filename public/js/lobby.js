@@ -3,7 +3,7 @@ const createRoom = document.querySelector("#btn-create-room");
 const leaveRoom = document.querySelector("#btn-leave-room");
 const startGame = document.querySelector("#btn-start-game");
 const playerList = document.querySelector("#player-list");
-const chatForm = document.getElementById("room-chat")
+const chatForm = document.getElementById("room-chat-entry")
 
 //JOIN ROOM
 joinRoomForm.addEventListener("submit", async event => {
@@ -76,16 +76,18 @@ playerList.addEventListener("click", event => {
 })
 
 //SEND MESSAGE
-chatForm.addEventListener("submit", event => {
+chatForm.addEventListener("submit", async event => {
     event.preventDefault();
 
     const user = firebase.auth().currentUser
-    const chat = database.ref("rooms/" + roomKey + "/chat")
-    chat.set({
+    const chat = database.ref("rooms/" + roomKey + "/chat/" + Date.now())
+    let package = {
         "uid": user.uid,
         "name": user.displayName,
-        "message": chatForm.message
-    })
+        "message": chatForm.message.value
+    }
+    console.log(package)
+    chat.set(package)
 
 })
 
