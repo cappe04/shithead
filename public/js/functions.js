@@ -80,7 +80,7 @@ async function removeUserFromRoom(key, nickname) {
         getSnapshot("rooms/" + key + "/users", function (snapshot) {
             snapshot.forEach(function (child) {
                 let usr = child.toJSON();
-                if (usr.name == nickname && usr.uid != user.uid) {
+                if (usr.name == nickname && child.key != user.uid) {
                     child.ref.remove();
                 }
             });
