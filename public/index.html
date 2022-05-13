@@ -69,15 +69,14 @@
 
             <div id="room-lobby" class="hide">
                 <div id="room-grid" class="">
-                    <div class="lobby1">
-                        <p id="room-display">Room: n2ja</p>
-                    </div>
                     <div class="lobby2">
+                        <u>Players:</u>
                         <ul id="player-list">
-                            <u>Players:</u>
+                            
                         </ul>
                     </div>
                     <div class="lobby3">
+                        <div style="flex-direction: row;">
                         <button id="btn-leave-room" class="plain-button">
                             Leave room
                         </button>
@@ -87,17 +86,16 @@
                         >
                             Start game
                         </button>
+                        </div>
+                        <p id="room-display">Room: n2ja</p>
                     </div>
                     <div class="lobby4">
                         <ul id="room-chat"></ul>
                     </div>
-                    <div class="lobby5" style="height:100%;">
-                        <form
-                            id="room-chat-entry"
-                            style="flex-direction: row; gap: 1rem; margin: 1rem; color: black"
-                        >
+                    <div class="lobby5">
+                        <form id="room-chat-entry">
                             <!-- <strong>Message</strong> -->
-                            <input class="entry small" style="width: 70%" name="message" />
+                            <input class="entry" style="width: 100%" name="message" />
                         </form>
                     </div>
                 </div>
