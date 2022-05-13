@@ -36,11 +36,14 @@ let enterRoom = async function (key) {
 
     //USER LEAVE
     fetch_users.on("child_removed", function (snapshot) {
-        const usr = snapshot.toJSON();
+        let usr = snapshot.toJSON();
+        usr.uid = snapshot.key
+        
         let cls = usr.uid == user.uid ? "list-self" : "list-user";
         let li = `<li class="${cls}">${usr.name}</li>`;
         playerList.innerHTML = playerList.innerHTML.replace(li, "");
         //för att byta skärm om du blir kickad
+        console.log(usr.uid)
         if (usr.uid == user.uid) {
             exitRoom()
         }});

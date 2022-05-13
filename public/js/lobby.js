@@ -52,14 +52,17 @@ createRoom.addEventListener("click", async event => {
 leaveRoom.addEventListener("click", async event => {
     const user = firebase.auth().currentUser;
 
-    let roomInfo = await getSnapshot(
-        "rooms/" + roomKey + "/room-info", (snapshot) => {return snapshot.toJSON();}
-    )
+    let roomInfo = await getSnapshot("rooms/" + roomKey + "/room-info", (snapshot) => {
+        return snapshot.toJSON();
+    })
 
-    if(user.uid = roomInfo.owner){
+    if(user.uid == roomInfo.owner){
         database.ref("rooms/" + roomKey).remove()
+    } else {
+        database.ref("rooms/" + roomKey + "/users/" + user.uid).remove()
     }
 
+    //VIKTIGT
     playerList.innerHTML = "<u>Players:</u>";
     roomChat.innerHTML = "";
     
