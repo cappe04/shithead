@@ -242,11 +242,12 @@ h1 {
   align-items: baseline;
   justify-content: flex-end;
   background-color: rgb(197, 197, 197);
-  height: 100%;
+  height: 6rem;
   width: 100%;
   overflow-y: auto;
   list-style-type: none;
   padding: 0;
+  text-indent: 2rem;
 }
 
 #room-chat-entry {
@@ -256,11 +257,11 @@ h1 {
 }
 
 #room-chat .chat-self {
-    background-color: #0b5ed7;
+    background-color: rgb(173, 173, 173);
 }
 
 #room-chat .chat-other {
-    background-color: yellowgreen;
+    background-color: rgb(197, 197, 197);
 }
 
 /* MAIN GAME */
