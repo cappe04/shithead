@@ -37,6 +37,18 @@
                     }
                     
                 },
+
+                "game": {
+                    ".write": true,
+                    "deck": [],
+                    "stack": [],
+                    "players": {
+                        "$uid": {
+                            ".validate": "newData.hasChildren(['cards', 'visable_cards', 'hidden_cards'])"
+                        }
+                    }
+                    
+                },
             
               	"$other": { ".validate": false }
             }
