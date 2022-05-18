@@ -72,6 +72,7 @@ leaveRoom.addEventListener("click", async event => {
 // START GAME
 startGame.addEventListener("click", async event => {
     toggleElements("menu", "game");
+    enterGame()
 })
 
 // Remove player when clicking their name

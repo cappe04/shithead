@@ -10,6 +10,7 @@ let enterRoom = async function (key) {
 
     const fetch_users = database.ref("rooms/" + key + "/users");
     const fetch_chat = database.ref("rooms/" + key + "/chat");
+    const fetch_gamestate = database.ref("rooms/" + key + "/room-info/playing")
 
     const playerList = document.getElementById("player-list");
     const chat = document.getElementById("room-chat");
@@ -49,18 +50,34 @@ let enterRoom = async function (key) {
             exitRoom()
         }});
 
+    //GAME STARTED OR ENDED
+    fetch_gamestate.on("value", snapshot => {
+        snapshot.val() ? enterGame() : exitGame()
+    })
+
     document.documentElement.style.setProperty("--user-crossed",
         roomInfo.owner == user.uid ? "line-through" : "normal"
     );
 };
 
-//FRONTEND LEAVE
+//LEAVE
 let exitRoom = function(){
     database.ref("rooms/" + roomKey + "/users").off("child_added");
     database.ref("rooms/" + roomKey + "/chat").off("child_added");
 
-    database.ref("rooms/" + roomKey + "/users").off("child_removed"); //bara för att.
+    database.ref("rooms/" + roomKey + "/users").off("child_removed");
 
     toggleElements("room-lobby", "room-prompt");
     roomKey = null;
+}
+
+//START GAME
+let enterGame = function(){
+    const game = database.ref("rooms/" + key + "/game")
+    game.set({stack: false})
+}
+
+//LEAVE GAME
+let exitGame = function(){
+
 }

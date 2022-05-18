@@ -24,8 +24,6 @@ let userInRoom = async function (user, key) {
 
 let joinRoom = function (key, user) {
     let branch = database.ref("rooms/" + key + "/users/" + user.uid);
-    console.log(userPackage(user))
-    
     branch.set(userPackage(user))
 
     database.ref("rooms").on("child_removed", (snapshot) => {
@@ -43,6 +41,8 @@ let userPackage = function (user) {
     return {
         name: user.displayName,
         hand: false, //kan inte vara {} för childen tas bort. så .validate fungerar inte
+        viscards: false,
+        hidcards: false
     };
 };
 
