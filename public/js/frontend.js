@@ -45,6 +45,7 @@ let enterRoom = async function (key) {
         //för att byta skärm om du blir kickad
         console.log(usr.uid)
         if (usr.uid == user.uid) {
+            roomChat.innerHTML = "";
             exitRoom()
         }});
 
