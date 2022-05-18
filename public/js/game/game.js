@@ -117,3 +117,43 @@ function layCard(){
         game.child("turn").set(turn+1)
     }
 }
+
+async function dealCards () {
+    const roomPath = "rooms/" + roomKey
+    const deckRef = database.ref(roomPath + "/game" + "/deck")
+    const deck = await getSnapshot(deckRef, async function(snapshot) {
+        return await snapshot.toJSON();
+    })
+    const players = getUsers(roomKey);
+    let n = 0;
+    for (let i = 0; i<3; i++) {
+        for (let j = 0; j<3; j++) {
+            for (let k = 0; k<players.length; k++) {
+                n++
+                let card = deck[52-n]
+                switch (i) {
+                    case 0:
+                        database.ref(roomPath + "/users" + players[k] + "/viscards").push(card)
+                        break;
+                    case 1:
+                        database.ref(roomPath + "/users" + players[k] + "/hidcards").push(card)
+                        break;
+                    case 2:
+                        database.ref(roomPath + "/users" + players[k] + "/hand").push(card)
+                        break;
+                }
+            }
+        }
+    }
+    getSnapshot("rooms/" + roomKey + "/game" + "/deck", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            if (childSnapshot.key >= 52-n) {
+                childSnapshot.remove()
+            }
+        })
+    })
+}
+
+async function moveCards (from, to) {
+
+}

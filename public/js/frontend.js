@@ -84,6 +84,7 @@ let enterGame = function(){
         turn: turn
     })
 
+    dealCards()
     //gör en init game här där man delar ut kort
 
     game.child("turn").on("value", snapshot => {
