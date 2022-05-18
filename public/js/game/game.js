@@ -25,12 +25,30 @@ class Deck {
         for (let i = 0; i < 52; i++) {
             this.deck.push(new Card(i, i % 4))
         }
+        this.shuffle()
+
+        this.ref = database.ref("rooms/" + roomKey + "/game/deck")
+        this.path = "rooms/" + roomKey + "/game/deck"
     }
 
-    peek() {
-        for (let card of this.deck) {
-            console.log(card)
-        }
+    get(){
+        return getSnapshot(this.path, snapshot => {
+            Object.values(snapshot.toJSON())
+        })
+    }
+
+    getTop(){
+        return this.get().at(-1)
+    }
+
+    removeTop(){
+        this.ref.child((get().length-1).toString()).remove()
+    }
+
+    draw(user){
+        let card = this.getTop()
+        this.removeTop()
+        database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand").push(card)
     }
 
     shuffle(iterations = 10) {
@@ -46,5 +64,56 @@ class Deck {
                 }
             }
         }
+    }
+}
+
+class Stack {
+    constructor(){
+        this.ref = database.ref("rooms/" + roomKey + "/game/stack")
+        this.path = "rooms/" + roomKey + "/game/stack"
+    }
+
+    get(){
+        return getSnapshot(this.path, snapshot => {
+            Object.values(snapshot.toJSON())
+        })
+    }
+
+    getTop(){
+        return this.get().at(-1)
+    }
+
+    add(card){
+        this.ref.push(card)
+    }
+
+    clear(){
+        this.ref.remove()
+    }
+}
+
+function removeFromHand(cardName){
+    const user = firebase.auth().currentUser
+    const path = "rooms/" + roomKey + "/users/" + user.uid + "/hand"
+    getSnapshot(path, snapshot => {
+        snapshot.forEach(element => {
+            if (element.toJSON().name == cardName){
+                element.ref.remove()
+            }
+        });
+    })
+}
+
+function layCard(){
+    const game = database.ref("rooms/" + roomKey + "/game")
+    const players = Object.keys(getUsers(roomKey))
+    const user = firebase.auth().currentUser
+
+    let card; // få ut ett riktigt kort
+    let stack = new Stack()
+    if(card.value >= stack.getTop().value){ // fixa alla speciella fall
+        removeFromHand(card.name)
+        stack.add(card)
+        game.child("turn").set(turn+1)
     }
 }

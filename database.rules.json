@@ -40,8 +40,10 @@
 
                 "game": {
                     ".write": true,
-                    "deck": [],
-                    "stack": []      
+                    "deck": {},
+                    "stack": {},
+                    "turn": {},
+                    "$other": {".validate": false}
                 },
             
               	"$other": { ".validate": false }

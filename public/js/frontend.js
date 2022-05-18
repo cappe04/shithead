@@ -72,12 +72,29 @@ let exitRoom = function(){
 }
 
 //START GAME
+var turn = 0;
+
 let enterGame = function(){
-    const game = database.ref("rooms/" + key + "/game")
-    game.set({stack: false})
+    const game = database.ref("rooms/" + roomKey + "/game")
+
+    let deck = new Deck()
+    game.set({
+        stack: false,
+        deck: deck.deck,
+        turn: turn
+    })
+
+    //gör en init game här där man delar ut kort
+
+    game.child("turn").on("value", snapshot => {
+        turn = snapshot.val()
+        // någon indikation på vems tur det är
+    })
+
 }
 
 //LEAVE GAME
 let exitGame = function(){
-
+    const game = database.ref("rooms/" + roomKey + "/game")
+    game.child("turn").off("value")
 }

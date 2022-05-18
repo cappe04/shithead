@@ -72,7 +72,7 @@ leaveRoom.addEventListener("click", async event => {
 // START GAME
 startGame.addEventListener("click", async event => {
     toggleElements("menu", "game");
-    enterGame()
+    database.ref("rooms/" + roomKey + "/room-info/playing").set(true)
 })
 
 // Remove player when clicking their name
@@ -85,7 +85,7 @@ playerList.addEventListener("click", event => {
 chatForm.addEventListener("submit", async event => {
     event.preventDefault();
     sendMessage(roomKey, chatForm.message.value)
-    chatForm.message.value =""
+    chatForm.message.value = ""
 })
 
 
