@@ -84,6 +84,7 @@ playerList.addEventListener("click", event => {
 chatForm.addEventListener("submit", async event => {
     event.preventDefault();
     sendMessage(roomKey, chatForm.message.value)
+    chatForm.message.value =""
 })
 
 
