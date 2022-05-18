@@ -7,6 +7,8 @@
   --card-aspect-ratio: calc(3.5/2);
   --card-width: 5vw;
   --card-height: calc(5vw * 1.4);
+  --base-width: calc(var(--card-width)*4);
+  --base-height: calc(var(--card-height)*1.2);
 }
 
 html {
@@ -254,25 +256,30 @@ h1 {
   grid-row: 2 / span 2;
 }
 #player-container {
-  grid-column: 2;
-  grid-row: 3;
-  display: flex;
-  justify-content: space-evenly;
-  background-image: url("../public/images/small\ green\ felt.jpg");
-  width: 300px;
-  height: 100px;
-  margin: auto;
-  margin-top: 5%;
-  border: 5px solid saddlebrown;
-  border-radius: 3px;
+    grid-column: 2;
+    grid-row: 3;
+    width: auto;
+    height: 100%;
+}
+
+#player-base {
+    display: flex;
+    justify-content: space-evenly;
+    background-image: url("../public/images/small\ green\ felt.jpg");
+    width: var(--base-width);
+    height: var(--base-height);
+    margin: auto;
+    margin-top: 5%;
+    border: 5px solid saddlebrown;
+    border-radius: 3px;
 }
 
 .opponent {
     display: flex;
     justify-content: space-evenly;
     background-image: url("../public/images/small\ green\ felt.jpg");
-    width: 300px;
-    height: 100px;
+    width: var(--base-width);
+    height: var(--base-height);
     border: 5px solid saddlebrown;
     border-radius: 3px;
 }
@@ -286,7 +293,7 @@ h1 {
 }
 
 .hand {
-  display: flex;
+  display: block;
   flex-direction: inherit;
 }
 

@@ -1,3 +1,4 @@
+// Byter synligheten av två element
 function toggleElements(hide, show) {
     document.getElementById(hide).classList.add("hide");
     document.getElementById(show).classList.remove("hide");
@@ -17,11 +18,13 @@ async function getUsers(key) { // ändra så att {snapshot.key : snapshot.toJSON
     );
 };
 
+// Om en användare är i rummet
 let userInRoom = async function (user, key) {
     let users = await getUsers(key);
     return Object.keys(users).includes(user)
 };
 
+// Gå med i ett rum
 let joinRoom = function (key, user) {
     let branch = database.ref("rooms/" + key + "/users/" + user.uid);
     console.log(userPackage(user))
@@ -39,6 +42,7 @@ let joinRoom = function (key, user) {
     enterRoom(key);
 };
 
+// Packetering användar informationen
 let userPackage = function (user) {
     return {
         name: user.displayName,
@@ -46,11 +50,13 @@ let userPackage = function (user) {
     };
 };
 
+// Skapa en nyckel till rummet
 let generateKey = async function () {
     let key = Math.random().toString(36).slice(2, 6);
     return (await roomExists(key)) ? generateKey() : key;
 };
 
+// Kolla om rummet redan finns
 let roomExists = async function (key) { // skriv om med getSnapshot
     let exists;
     await database.ref("rooms/" + key).once("value").then(function (snapshot) {
@@ -59,6 +65,7 @@ let roomExists = async function (key) { // skriv om med getSnapshot
     return exists;
 };
 
+// Skicka meddelande till databasen
 function sendMessage(key, message){
     const user = firebase.auth().currentUser
     const chat = database.ref("rooms/" + key + "/chat/" + Date.now())
@@ -70,6 +77,7 @@ function sendMessage(key, message){
     chat.set(package)
 }
 
+// Ta bort en användare från rummet
 async function removeUserFromRoom(key, nickname) {
     let owner = await getSnapshot("rooms/" + key + "/room-info",(snapshot) => {
         return snapshot.toJSON().owner;
