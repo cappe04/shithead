@@ -77,11 +77,13 @@ var turn = 0;
 let enterGame = async function(){
     toggleElements("menu", "game");
     const game = database.ref("rooms/" + roomKey + "/game")
-    const players = Object.keys(getUsers(roomKey))
+    const uids = Object.keys(getUsers(roomKey))
     const user = firebase.auth().currentUser
     const roomInfo = await getSnapshot(
         "rooms/" + roomKey + "/room-info", (snapshot) => {return snapshot.toJSON();}
     );
+
+    for(let uid of uids){ UIAddUser(uid) }
 
     if(user.uid == roomInfo.owner){
         let deck = new Deck()
