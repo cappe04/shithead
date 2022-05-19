@@ -97,7 +97,7 @@ function UISetBaseCard(uid, index, value, suit){
 function UIAddHandCard(index, value, suit) {
     const card = new Card((value-1)*4, suit)
     document.querySelector("#hand").innerHTML += `
-    <div id="hand-card${index}" class="playing-card">
+    <div id="hand-card${index}" class="playing-card" onclick="onHandCardClick(${index})">
         <img class="front-face" src="../public/images/all cards/${card.name}.png">
     </div>
     `

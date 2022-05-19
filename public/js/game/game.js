@@ -95,8 +95,20 @@ class Stack {
     }
 }
 
-let onHandCardClick = event => {
-    ;
+let onHandCardClick = index => {
+    const gamePath = "rooms/" + roomKey + "/game"
+    const user = firebase.auth().currentUser
+    const uids = Object.keys(await getUsers(roomKey))
+    const turn = await getSnapshot(gamePath + "/turn", snapshot => {
+        return snapshot.val()        
+    })
+
+    if(user.uid == uids[turn]){
+        const cardRef = database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand/" + index)
+        let data = cardRef.toJSON()
+        layCard(data.value, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
+        // remove div
+    }
 } 
 
 function removeFromHand(cardName){
@@ -111,12 +123,12 @@ function removeFromHand(cardName){
     })
 }
 
-function layCard(){
+function layCard(value, suit){
     const game = database.ref("rooms/" + roomKey + "/game")
     const players = Object.keys(getUsers(roomKey))
     const user = firebase.auth().currentUser
 
-    let card; // få ut ett riktigt kort
+    let card = new Card(value, suit)
     let stack = new Stack()
     if(card.value >= stack.getTop().value){ // fixa alla speciella fall
         removeFromHand(card.name)

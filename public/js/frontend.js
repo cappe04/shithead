@@ -1,4 +1,3 @@
-
 //FRONTEND ROOM
 let enterRoom = async function (key) {
     console.log("Entered room: " + key);
@@ -96,10 +95,15 @@ let enterGame = async function(){
             turn: turn
         })
         dealCards()
+        database.ref("rooms/" + roomKey + "/game/stack").remove()
         //allt som bara behöver köra en gång
     }
 
     initUIListeners()
+
+    if(uids[turn] == user.uid){
+        console.log("It's your turn now. Hurry up!")
+    }
 
     game.child("turn").on("value", snapshot => {
         turn = snapshot.val()
