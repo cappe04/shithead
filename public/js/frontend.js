@@ -84,7 +84,7 @@ let enterGame = async function(){
     );
 
     let otherUids = uids
-    uids.splice(uids.indexOf(otherUids.uid, 1))
+    otherUids.splice(otherUids.indexOf(user.uid), 1)
 
     for(let uid of otherUids){ UIAddUser(uid) }
 
