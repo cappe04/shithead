@@ -60,14 +60,6 @@ class DeckOp{
             this.ref.child((deck.length-1).toString()).remove()        
         })
     }
-
-    async draw(user){
-        let card = this.getTop()
-        this.removeTop()
-        this.get().then(deck => {
-            database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand/" + (deck.length - 1)).set(card)
-        })
-    }
 }
 
 class Stack {
@@ -110,9 +102,17 @@ let onHandCardClick = async index => {
             return snapshot.toJSON()
         })
         layCard((data.value-1)*4, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
-        // remove div
+        document.querySelector(`#hand-card${index}`).remove()
+
+        //draw new card. Add restrictions
+        const deck = new DeckOp()
+        deck.getTop().then(card => {
+            deck.removeTop()
+            database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand/" + index).set(card)
+        })
+        
     }
-} 
+}
 
 function removeFromHand(cardName){
     const user = firebase.auth().currentUser
