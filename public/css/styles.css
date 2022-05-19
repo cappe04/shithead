@@ -23,6 +23,7 @@ body {
     display: flex;
     width: 100vw;
     height: 100vh;
+    margin: 0;
     justify-content: center;
     align-items: center;
 }
@@ -351,14 +352,16 @@ h1 {
     background-color: red;
 }
 
-.hand {
+#hand {
     display: flex;
 }
 
-/* .playing-card {
-    width: calc(var(--card-width)*1.3);
-    height: calc(var(--card-height)*1.3);
-} */
+#hand .playing-card {
+    width: calc(var(--card-width)*1.6);
+    height: calc(var(--card-height)*1.6);
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
 
 #card-stack {
     display: flex;
