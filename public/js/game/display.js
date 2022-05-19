@@ -15,7 +15,10 @@ async function initUIListeners() {
 
     stack.on("child_added", (snapshot) => {
         // Lägg till det tillagda kortet högst upp
-        console.log(snapshot.toJSON())
+        const data = snapshot.toJSON()
+        const card = new Card((data.value-1)*4, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
+        document.querySelector("#stack-top-card")
+        .innerHTML = `<img class="front-face" src="../public/images/all cards/${card.name}.png">`
     })
 
     stack.on("child_removed", (snapshot) => {
