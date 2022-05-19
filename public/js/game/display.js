@@ -18,7 +18,7 @@ async function initUIListeners() {
         const data = snapshot.toJSON()
         const card = new Card((data.value-1)*4, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
         document.querySelector("#stack-top-card")
-        .innerHTML = `<img class="front-face" src="../public/images/all cards/${card.name}.png">`
+        .innerHTML = `<img class="front-face" src="../images/all cards/${card.name}.png">`
     })
 
     stack.on("child_removed", (snapshot) => {
@@ -94,14 +94,14 @@ function UIAddUser(uid){
 function UISetBaseCard(uid, index, value, suit){
     const card = new Card((value-1)*4, suit)
     document.getElementById(`user-${uid}-card${index}`)
-        .innerHTML = `<img class="front-face" src="../public/images/all cards/${card.name}.png">`
+        .innerHTML = `<img class="front-face" src="../images/all cards/${card.name}.png">`
 }
 
 function UIAddHandCard(index, value, suit) {
     const card = new Card((value-1)*4, suit)
     document.querySelector("#hand").innerHTML += `
     <div id="hand-card${index}" class="playing-card" onclick="onHandCardClick(${index})">
-        <img class="front-face" src="../public/images/all cards/${card.name}.png">
+        <img class="front-face" src="../images/all cards/${card.name}.png">
     </div>
     `
 }

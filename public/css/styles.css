@@ -12,7 +12,7 @@
 }
 
 html {
-    background-image: url("./images/index\ background.jpg");
+    background-image: url("../images/index\ background.jpg");
     background-size: cover;
     margin: 0;
     height: 100%;
@@ -274,7 +274,7 @@ h1 {
 
 /* MAIN GAME */
 #game {
-    background-image: url("/public/images/index\ background.jpg");
+    background-image: url("../images/index\ background.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -303,7 +303,7 @@ h1 {
     grid-row: 2;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    background-image: url("/public/images/small\ green\ felt.jpg");
+    background-image: url("../images/small\ green\ felt.jpg");
     width: auto;
     height: 100%;
     border: 5px solid saddlebrown;
@@ -326,7 +326,7 @@ h1 {
 #player-base {
     display: flex;
     justify-content: space-evenly;
-    background-image: url("/public/images/small\ green\ felt.jpg");
+    background-image: url("../images/small\ green\ felt.jpg");
     width: var(--base-width);
     height: var(--base-height);
     margin-top: 5%;
@@ -337,7 +337,7 @@ h1 {
 .opponent {
     display: flex;
     justify-content: space-evenly;
-    background-image: url("/public/images/small\ green\ felt.jpg");
+    background-image: url("../images/small\ green\ felt.jpg");
     width: var(--base-width);
     height: var(--base-height);
     border: 5px solid saddlebrown;
