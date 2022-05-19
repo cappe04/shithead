@@ -14,7 +14,7 @@ class Card {
         }
         this.suit = ["♣", "♦", "♥", "♠"][suit];
         this.suitName = ["clubs", "diamonds", "hearts", "spades"][suit]
-        this.name = this.rank + " of " + this.suitName
+        this.name = this.rank + "_of_" + this.suitName
         this.value = Math.floor(value / 4) + 1
     }
 }

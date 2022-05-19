@@ -58,11 +58,15 @@ function initUIListeners() {
 function UIAddUser(uid){
     document.getElementById("opponents-container").innerHTML += `<div class="opponent">
         <div class="base">
+            <div class="playing-card" id="${uid}-card0"></div>
             <div class="playing-card" id="${uid}-card1"></div>
             <div class="playing-card" id="${uid}-card2"></div>
-            <div class="playing-card" id="${uid}-card3"></div>
         </div>
         <div id="${uid}-card-counter" class="card-counter"></div>
     </div>`
 }
 
+function setUICard(uid, index, value, suit){
+    const card = new Card((value-1)*4, suit)
+    document.getElementById(`${uid}-card${index}`).innerHTML = `<img class="front-face" src="../public/images/all cards/${card.name}.png">`
+}
