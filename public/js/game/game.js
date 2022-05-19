@@ -28,18 +28,12 @@ class Deck {
         this.shuffle()
     }
 
-    shuffle(iterations = 10) {
-        for (let i = 0; i < iterations; i++) {
-            let deckLength = this.deck.length
-            let half = this.deck.slice(0, Math.floor(deckLength / 2))
-            let otherHalf = this.deck.slice(Math.floor(deckLength / 2), deckLength)
-            for (let j = 0; j < deckLength; j++) {
-                if (j % 2 === 0) {
-                    this.deck[j] = half[Math.floor(j / 2)]
-                } else {
-                    this.deck[j] = otherHalf[Math.floor(j / 2)]
-                }
-            }
+    shuffle() {
+        for (let i = this.deck.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * i);
+            this.temp = this.deck[i];
+            this.deck[i] = this.deck[j];
+            this.deck[j] = this.temp;
         }
     }
 }
