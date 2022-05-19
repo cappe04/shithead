@@ -122,7 +122,7 @@ function layCard(){
     if(card.value >= stack.getTop().value){ // fixa alla speciella fall
         removeFromHand(card.name)
         stack.add(card)
-        game.child("turn").set(turn+1)
+        game.child("turn").set((turn+1)%players.length)
     }
 }
 

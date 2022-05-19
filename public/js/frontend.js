@@ -74,8 +74,13 @@ let exitRoom = function(){
 //START GAME
 var turn = 0;
 
-let enterGame = function(){
+let enterGame = async function(){
     const game = database.ref("rooms/" + roomKey + "/game")
+    const players = Object.keys(getUsers(roomKey))
+    const user = firebase.auth().currentUser
+    const roomInfo = await getSnapshot(
+        "rooms/" + roomKey + "/room-info", (snapshot) => {return snapshot.toJSON();}
+    );
 
     let deck = new Deck()
     game.set({
@@ -84,12 +89,19 @@ let enterGame = function(){
         turn: turn
     })
 
-    dealCards()
-    //gör en init game här där man delar ut kort
+    if(user.uid == roomInfo.owner){
+        dealCards()
+        //allt som bara behöver köra en gång
+    }
 
     game.child("turn").on("value", snapshot => {
         turn = snapshot.val()
         // någon indikation på vems tur det är
+        if(players[turn] == user.uid){
+            // vad som händer när det blir din tur
+        } else {
+            // vad som händer när det är någon annans tur
+        }
     })
 
 }
