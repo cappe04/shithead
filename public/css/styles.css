@@ -315,6 +315,9 @@ h1 {
 #player-container {
     grid-column: 2;
     grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     width: auto;
     height: 100%;
 }
@@ -325,7 +328,6 @@ h1 {
     background-image: url("/public/images/small\ green\ felt.jpg");
     width: var(--base-width);
     height: var(--base-height);
-    margin: auto;
     margin-top: 5%;
     border: 5px solid saddlebrown;
     border-radius: 3px;
@@ -350,8 +352,7 @@ h1 {
 }
 
 .hand {
-    display: block;
-    flex-direction: inherit;
+    display: flex;
 }
 
 #card-stack {
