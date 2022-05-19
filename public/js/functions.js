@@ -45,8 +45,8 @@ let userPackage = function (user) {
     return {
         name: user.displayName,
         hand: false, //kan inte vara {} för childen tas bort. så .validate fungerar inte
-        viscards: [],
-        hidcards: []
+        viscards: false,
+        hidcards: false
     };
 };
 
