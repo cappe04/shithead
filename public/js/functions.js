@@ -97,3 +97,10 @@ async function removeUserFromRoom(key, nickname) {
         console.log("You don't have premission to do that!");
     }
 }
+
+Array.prototype.remove = function(item){
+    const index = this.indexOf(item)
+    if (index > -1){
+        return this.splice(index, 1)
+    }
+}

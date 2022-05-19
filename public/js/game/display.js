@@ -23,22 +23,17 @@ function initListeners() {
                 userCardCounter.innerHTML = userCardCounter.value - 1
             })
         }
-
-        
     }
 }
 
 function UIAddUser(uid){
-    const html = 
-    `<div class="opponent">
+    document.getElementById("opponents-container").innerHTML += `<div class="opponent">
         <div class="base">
             <div class="playing-card" id="${uid}-card1"></div>
             <div class="playing-card" id="${uid}-card2"></div>
             <div class="playing-card" id="${uid}-card3"></div>
         </div>
-        <div id="${uid}-card-counter" class="card-counter">5</div>
+        <div id="${uid}-card-counter" class="card-counter"></div>
     </div>`
-
-    document.getElementById("opponents-container").innerHTML += html
 }
 

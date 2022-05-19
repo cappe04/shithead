@@ -77,13 +77,16 @@ var turn = 0;
 let enterGame = async function(){
     toggleElements("menu", "game");
     const game = database.ref("rooms/" + roomKey + "/game")
-    const uids = Object.keys(getUsers(roomKey))
+    const uids = Object.keys(await getUsers(roomKey))
     const user = firebase.auth().currentUser
     const roomInfo = await getSnapshot(
         "rooms/" + roomKey + "/room-info", (snapshot) => {return snapshot.toJSON();}
     );
 
-    for(let uid of uids){ UIAddUser(uid) }
+    let otherUids = uids
+    uids.splice(uids.indexOf(otherUids.uid, 1))
+
+    for(let uid of otherUids){ UIAddUser(uid) }
 
     if(user.uid == roomInfo.owner){
         let deck = new Deck()
@@ -99,7 +102,7 @@ let enterGame = async function(){
     game.child("turn").on("value", snapshot => {
         turn = snapshot.val()
         // någon indikation på vems tur det är
-        if(players[turn] == user.uid){
+        if(uids[turn] == user.uid){
             // vad som händer när det blir din tur
         } else {
             // vad som händer när det är någon annans tur

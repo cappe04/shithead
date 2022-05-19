@@ -54,7 +54,6 @@ class DeckOp{
         return await getSnapshot(this.path, snapshot => {
             return Object.values(snapshot.toJSON())
         })
-
     }
 
     async getTop(){
@@ -132,8 +131,6 @@ async function dealCards () {
 
     const users = await getUsers(roomKey)
     const uids = Object.keys(users)
-
-    console.log(uids)
 
     for(let uid of uids){
 
