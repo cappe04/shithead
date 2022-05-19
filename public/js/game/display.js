@@ -26,17 +26,17 @@ async function initUIListeners() {
         const userRef = database.ref("rooms/" + roomKey + "/users/" + uid)
         
         if (uid == firebase.auth().currentUser.uid) {
-            const selfCardCounter = document.querySelector("#self-card-counter");
+            const playerCardCounter = document.querySelector("#player-card-counter");
 
             userRef.child("hand").on("child_added", snapshot => {
-                selfCardCounter.innerHTML = parseInt(selfCardCounter.innerHTML) + 1
+                playerCardCounter.innerHTML = parseInt(playerCardCounter.innerHTML) + 1
                 // Det nya kortet (snapshot) måste läggas till i handen 
                 const data = snapshot.toJSON()
                 UIAddHandCard(snapshot.key, data.value, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
             })
 
             userRef.child("hand").on("child_removed", snapshot => {
-                selfCardCounter.innerHTML = parseInt(selfCardCounter.innerHTML) - 1
+                playerCardCounter.innerHTML = parseInt(playerCardCounter.innerHTML) - 1
                 // Kortet (snapshot) måste försvinna från handen
             })
 
@@ -47,7 +47,7 @@ async function initUIListeners() {
 
             
         } else {
-            const userCardCounter = document.querySelector(`#${uid}-card-counter`)
+            const userCardCounter = document.querySelector(`#user-${uid}-card-counter`)
             
             // Hand listeners on opponents
             userRef.child("hand").on("child_added", snapshot => {
@@ -80,17 +80,17 @@ async function initUIListeners() {
 function UIAddUser(uid){
     document.getElementById("opponents-container").innerHTML += `<div class="opponent">
         <div class="base">
-            <div class="playing-card" id="${uid}-card0"></div>
-            <div class="playing-card" id="${uid}-card1"></div>
-            <div class="playing-card" id="${uid}-card2"></div>
+            <div class="playing-card" id="user-${uid}-card0"></div>
+            <div class="playing-card" id="user-${uid}-card1"></div>
+            <div class="playing-card" id="user-${uid}-card2"></div>
         </div>
-        <div id="${uid}-card-counter" class="card-counter">0</div>
+        <div id="user-${uid}-card-counter" class="card-counter">0</div>
     </div>`
 }
 
 function UISetBaseCard(uid, index, value, suit){
     const card = new Card((value-1)*4, suit)
-    document.getElementById(`${uid}-card${index}`)
+    document.getElementById(`user-${uid}-card${index}`)
         .innerHTML = `<img class="front-face" src="../public/images/all cards/${card.name}.png">`
 }
 
