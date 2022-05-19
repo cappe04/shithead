@@ -83,14 +83,13 @@ let enterGame = async function(){
         "rooms/" + roomKey + "/room-info", (snapshot) => {return snapshot.toJSON();}
     );
 
-    let deck = new Deck()
-    game.set({
-        stack: false,
-        deck: deck.deck,
-        turn: turn
-    })
-
     if(user.uid == roomInfo.owner){
+        let deck = new Deck()
+        game.set({
+            stack: false,
+            deck: deck.deck,
+            turn: turn
+        })
         dealCards()
         //allt som bara behöver köra en gång
     }

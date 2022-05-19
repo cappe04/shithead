@@ -63,10 +63,8 @@ class DeckOp{
     }
 
     removeTop(){
-        this.get().then(async deck => {
-            await getSnapshot(this.path + "/" + (deck.length-1), child => {
-                child.ref.remove()
-            })
+        this.get().then(deck => {
+            this.ref.child((deck.length-1).toString()).remove()        
         })
     }
 
