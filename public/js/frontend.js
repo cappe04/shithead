@@ -106,6 +106,7 @@ let enterGame = async function(){
         // någon indikation på vems tur det är
         if(uids[turn] == user.uid){
             // vad som händer när det blir din tur
+            console.log("It's your turn now. Hurry up!")
         } else {
             // vad som händer när det är någon annans tur
         }

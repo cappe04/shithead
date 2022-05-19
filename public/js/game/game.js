@@ -67,10 +67,12 @@ class DeckOp{
         })
     }
 
-    draw(user){
+    async draw(user){
         let card = this.getTop()
         this.removeTop()
-        database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand").push(card)
+        this.get().then(deck => {
+            database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand/" + (deck.length - 1)).set(card)
+        })
     }
 }
 
@@ -98,6 +100,10 @@ class Stack {
         this.ref.remove()
     }
 }
+
+let onHandCardClick = event => {
+    ;
+} 
 
 function removeFromHand(cardName){
     const user = firebase.auth().currentUser
@@ -140,27 +146,23 @@ async function dealCards () {
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uid + "/hidcards").push(card)
+                database.ref(roomPath + "/users/" + uid + "/hidcards/" + i).set(card)
             })
             deck.removeTop()
         }
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uid + "/viscards").push(card)
+                database.ref(roomPath + "/users/" + uid + "/viscards/" + i).set(card)
             })
             deck.removeTop()
         }
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uid + "/hand").push(card)
+                database.ref(roomPath + "/users/" + uid + "/hand/" + i).set(card)
             })
             deck.removeTop()
         }
     }
-}
-
-async function moveCards (from, to) {
-
 }
