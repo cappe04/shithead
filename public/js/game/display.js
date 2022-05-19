@@ -1,13 +1,16 @@
 
 
-function initListeners() {
-    const deck = database.ref("rooms/" + roomKey + "/game" + "/deck");
+function initUIListeners() {
+    const deckPath = "rooms/" + roomKey + "/game" + "/deck"
+    const deck = database.ref(deckPath);
     const stack = database.ref("rooms/" + roomKey + "/game" + "/stack");
     const uids = Object.keys(getUsers(roomKey))
 
-    deck.on("child_removed", (snapshot) => {
-        const deckCardCounter = document.querySelector("#deck-card-counter") 
-        deckCardCounter.innerHTML = deckCardCounter.value + 1
+    deck.on("child_removed", async removedSnapshot => {
+        await getSnapshot(deckPath, snapshot => {
+            document.querySelector("#deck-card-counter")
+                .innerHTML = Object.keys(snapshot.toJSON()).length.toString()
+        })
     })
 
     stack.on("child_added", (snapshot) => {

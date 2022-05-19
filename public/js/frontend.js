@@ -99,6 +99,8 @@ let enterGame = async function(){
         //allt som bara behöver köra en gång
     }
 
+    initUIListeners()
+
     game.child("turn").on("value", snapshot => {
         turn = snapshot.val()
         // någon indikation på vems tur det är
