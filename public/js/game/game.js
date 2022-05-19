@@ -76,14 +76,15 @@ class Stack {
         this.path = "rooms/" + roomKey + "/game/stack"
     }
 
-    get(){
-        return getSnapshot(this.path, snapshot => {
-            Object.values(snapshot.toJSON())
+    async get(){
+        return await getSnapshot(this.path, snapshot => {
+            return Object.values(snapshot.toJSON())
         })
     }
 
-    getTop(){
-        return this.get().at(-1)
+    async getTop(){
+        let stack = await this.get()
+        return stack.at(-1)
     }
 
     add(card){
@@ -95,7 +96,7 @@ class Stack {
     }
 }
 
-let onHandCardClick = index => {
+let onHandCardClick = async index => {
     const gamePath = "rooms/" + roomKey + "/game"
     const user = firebase.auth().currentUser
     const uids = Object.keys(await getUsers(roomKey))
@@ -104,9 +105,11 @@ let onHandCardClick = index => {
     })
 
     if(user.uid == uids[turn]){
-        const cardRef = database.ref("rooms/" + roomKey + "/users/" + user.uid + "/hand/" + index)
-        let data = cardRef.toJSON()
-        layCard(data.value, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
+        const cardPath = "rooms/" + roomKey + "/users/" + user.uid + "/hand/" + index
+        let data = await getSnapshot(cardPath, snapshot => {
+            return snapshot.toJSON()
+        })
+        layCard((data.value-1)*4, {"clubs": 0, "diamonds": 1, "hearts": 2, "spades": 3}[data.suitName])
         // remove div
     }
 } 
@@ -123,17 +126,17 @@ function removeFromHand(cardName){
     })
 }
 
-function layCard(value, suit){
+async function layCard(value, suit){
     const game = database.ref("rooms/" + roomKey + "/game")
-    const players = Object.keys(getUsers(roomKey))
-    const user = firebase.auth().currentUser
+    const uids = Object.keys(await getUsers(roomKey))
 
     let card = new Card(value, suit)
     let stack = new Stack()
-    if(card.value >= stack.getTop().value){ // fixa alla speciella fall
+    if(true){ // !(await getSnapshot(stack.path, snapshot => {return snapshot.exists()})) || card.value >= stack.getTop().value
         removeFromHand(card.name)
         stack.add(card)
-        game.child("turn").set((turn+1)%players.length)
+        console.log(card)
+        game.child("turn").set((turn+1)%uids.length)
     }
 }
 
