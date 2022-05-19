@@ -19,18 +19,18 @@
                 "users": {
                   	".write": "!data.exists() || (data.exists() && !newData.exists())",
                     "$uid": {
-                      	".write": "!data.exists() || (!newData.exists() && $uid == auth.uid) || (!newData.exists() && root.child('rooms').child($key).child('room-info').child('owner').val() == auth.uid)",
+                      	".write": "!data.exists() || (!newData.exists() && $uid == auth.uid) || (root.child('rooms').child($key).child('room-info').child('owner').val() == auth.uid)",
                         "hand": {
                             ".read": "$uid === auth.uid",
-                            ".write": "$uid === auth.uid" 
+                            ".write": true
                         },
                         "viscards": {
                             ".read": "$uid === auth.uid",
-                            ".write": "$uid === auth.uid" 
+                            ".write": true
                         },
                         "hidcards": {
                             ".read": "$uid === auth.uid",
-                            ".write": "$uid === auth.uid" 
+                            ".write": true 
                         }
                     }
                 },

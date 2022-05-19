@@ -71,7 +71,6 @@ leaveRoom.addEventListener("click", async event => {
 
 // START GAME
 startGame.addEventListener("click", async event => {
-    toggleElements("menu", "game");
     database.ref("rooms/" + roomKey + "/room-info/playing").set(true)
 })
 

@@ -75,6 +75,7 @@ let exitRoom = function(){
 var turn = 0;
 
 let enterGame = async function(){
+    toggleElements("menu", "game");
     const game = database.ref("rooms/" + roomKey + "/game")
     const players = Object.keys(getUsers(roomKey))
     const user = firebase.auth().currentUser

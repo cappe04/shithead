@@ -63,8 +63,10 @@ class DeckOp{
     }
 
     removeTop(){
-        this.get().then(deck => {
-            this.ref.child((deck.length-1).toString()).remove()
+        this.get().then(async deck => {
+            await getSnapshot(this.path + "/" + (deck.length-1), child => {
+                child.ref.remove()
+            })
         })
     }
 
@@ -131,64 +133,37 @@ async function dealCards () {
     const deck = new DeckOp()
 
     const users = await getUsers(roomKey)
-    const players = Object.values(users)
     const uids = Object.keys(users)
 
-    for(p in players){
+    console.log(uids)
 
-        database.ref(roomPath + "/users/" + uids[p] + "/hidcards").remove()
-        database.ref(roomPath + "/users/" + uids[p] + "/viscards").remove()
-        database.ref(roomPath + "/users/" + uids[p] + "/hand").remove()
+    for(let uid of uids){
+
+        database.ref(roomPath + "/users/" + uid + "/hidcards").remove()
+        database.ref(roomPath + "/users/" + uid + "/viscards").remove()
+        database.ref(roomPath + "/users/" + uid + "/hand").remove()
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uids[p] + "/hidcards").push(card)
+                database.ref(roomPath + "/users/" + uid + "/hidcards").push(card)
             })
             deck.removeTop()
         }
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uids[p] + "/viscards").push(card)
+                database.ref(roomPath + "/users/" + uid + "/viscards").push(card)
             })
             deck.removeTop()
         }
 
         for(let i = 0; i<3; i++){
             await deck.getTop().then(card => {
-                database.ref(roomPath + "/users/" + uids[p] + "/hand").push(card)
+                database.ref(roomPath + "/users/" + uid + "/hand").push(card)
             })
             deck.removeTop()
         }
     }
-
-    // let n = 0;
-    // for (let i = 0; i<3; i++) {
-    //     for (let j = 0; j<3; j++) {
-    //         for (let k = 0; k<players.length; k++) {
-    //             n++
-    //             let card = deck[52-n]
-    //             switch (i) {
-    //                 case 0:
-    //                     database.ref(roomPath + "/users" + players[k] + "/viscards").push(card)
-    //                     break;
-    //                 case 1:
-    //                     database.ref(roomPath + "/users" + players[k] + "/hidcards").push(card)
-    //                     break;
-    //                 case 2:
-    //                     database.ref(roomPath + "/users" + players[k] + "/hand").push(card)
-    //                     break;
-    //             }
-    //         }
-    //     }
-    // }
-    // getSnapshot("rooms/" + roomKey + "/game" + "/deck", function (snapshot) {
-    //     snapshot.forEach(function (childSnapshot) {
-    //         if (childSnapshot.key >= 52-n) {
-    //             childSnapshot.remove()
-    //         }
-    //     })
-    // })
 }
 
 async function moveCards (from, to) {
